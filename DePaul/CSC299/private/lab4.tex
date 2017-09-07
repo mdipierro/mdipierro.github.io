@@ -1,0 +1,76 @@
+\documentclass[12pt]{article}
+
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{upquote}
+\begin{document}
+
+\section{CSC299 - Fall 2015 - Lab Assignment 4}
+
+\subsection*{IMPORTANT INSTRUCTIONS}
+
+\noindent Use this URL to verify your progress:
+\begin{verbatim}
+https://mdp.cdm.depaul.edu/csc299
+\end{verbatim}
+
+\noindent Login into:
+\begin{verbatim}
+mdp.cdm.depaul.edu
+\end{verbatim}
+
+\noindent Under your csc299 folder create a new folder called {\tt lab04} and, under the latter, create a new file called {\tt README.json}. This file should contain:
+
+\begin{verbatim}
+{"student_id": "<yourstudentid>", "name": "<yourname>", "email": "<youremail>"}
+\end{verbatim}
+
+\noindent After completing each task below remember to do:
+
+\begin{verbatim}
+git add README.json
+git add *.txt
+git add *.csv 
+git add *.py
+git commit -a -m "task completed"
+git push
+\end{verbatim}
+
+\noindent  else I will not receive your work.
+
+\noindent ATTENTION: Files are different for each student.
+
+\subsection{Task 1 (2 points)}
+
+\noindent  Create a new folder {\tt ~/csc299/lab04} and {\tt cd} under that folder.
+
+\noindent  Create a program called {\tt program41.py} which downloads the following web page:
+\begin{verbatim}
+http://mdp.cdm.depaul.edu/csc299/default/accounts?page=1
+\end{verbatim}
+
+\noindent into a file called {\tt accounts.1.html}.
+
+\subsection{Task 2 (3 points)}
+
+Write a program {\tt program42.py} which parses the above file {\tt accounts.1.html} and saves the amount associated to ``Luise Carpentier'' in a file {\tt amount.luise.txt}.
+
+\subsection{Task 3 (3 points)}
+
+\noindent  Write a program called {\tt program43.py} which downloads and computes the total of the column amount for page:
+\begin{verbatim}
+http://mdp.cdm.depaul.edu/csc299/default/accounts?page=1
+\end{verbatim}
+
+\noindent and stores it in {\tt amount.1.txt}
+
+\subsection{Task 4 (3 points)}
+
+\noindent  Write a program called {\tt program44.py} which downloads all the pages:
+\begin{verbatim}
+http://mdp.cdm.depaul.edu/csc299/default/accounts?page=N
+\end{verbatim}
+
+\noindent and computes the total amount (total of all pages) and stores it in {\tt amount.total.txt}. The program shoud not save the HTML files, only process them.
+
+\end{document}

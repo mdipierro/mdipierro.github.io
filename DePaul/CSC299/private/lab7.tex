@@ -1,0 +1,102 @@
+\documentclass[12pt]{article}
+
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{upquote}
+\begin{document}
+
+\section{CSC299 - Fall 2015 - Lab Assignment 7}
+
+\subsection*{IMPORTANT INSTRUCTIONS}
+
+\noindent Login into:
+\begin{verbatim}
+mdp.cdm.depaul.edu
+\end{verbatim}
+
+\noindent Under your csc299 folder create a new folder called {\tt lab07}.
+\noindent After completing each task below remember to do:
+
+\begin{verbatim}
+git add README.json
+git add .
+git commit -a -m "task completed"
+git push
+\end{verbatim}
+
+\noindent  else I will not receive your work.
+
+\noindent In this class you MUST use mechanize and must connect using a csc299 header, as in the following example:
+
+\begin{verbatim}
+import mechanize
+br = mechanize.Browser()
+br.addheaders = [('csc299','true')]
+br.open('http://mdp.cdm.depaul.edu/csc299a7/default/index')
+br.forms()
+\end{verbatim}
+
+\subsection{Task 1 (3 points)}
+
+\noindent  In folder {\tt ~/csc299/lab07} write a program {\tt program71.py} that connects to 
+
+\begin{verbatim}
+http://mdp.cdm.depaul.edu/csc299a7/default/user/register
+\end{verbatim}
+
+and registers you. Use your actual email and student id.
+DO NOT REGISTER USING THE BROWSER ELSE YOU WILL NOT BE ABLE TO REGISTER TWICE.
+After you register using mechanize, you can try it using the browser using the email and password provided upon registration.
+
+\subsection{Task 2 (3 points)}
+
+\noindent Write a program {\tt program72.py} that connects to 
+
+\begin{verbatim}
+http://mdp.cdm.depaul.edu/csc299a7/default/index
+\end{verbatim}
+
+and does the following:
+\begin{itemize}
+\item Sign in
+\item Extract all numbers from the {\tt index} page.
+\end{itemize}
+
+Notice the sequence of numbers is different for each students and randomized at each call to the {\tt index} page.
+
+\subsection{Task 3 (3 points)}
+
+\noindent Modify the above program in order to:
+\begin{itemize}
+\item Sign in
+\item Extract all numbers from the {\tt index} page.
+\item Compute the sum of the numbers ({\tt total})
+\item Click the ``Next'' button
+\end{itemize}
+
+\subsection{Task 4 (2 points)}
+
+\noindent Modify the above program in order to:
+\begin{itemize}
+\item Sign in
+\item Extract all numbers from the {\tt index} page.
+\item Compute the sum of the numbers ({\tt total})
+\item Click the ``Next'' button
+\item In the next page ({\tt form}), submit the total
+\item Check that the page contains ``Assignment Completed''
+\end{itemize}
+
+\subsection*{Useful links}
+
+\begin{verbatim}
+http://mdp.cdm.depaul.edu/csc299a7/default/user/register
+http://mdp.cdm.depaul.edu/csc299a7/default/user/logout
+http://mdp.cdm.depaul.edu/csc299a7/default/user/login                     
+http://mdp.cdm.depaul.edu/csc299a7/default/user/index
+http://mdp.cdm.depaul.edu/csc299a7/default/user/form
+http://mdp.cdm.depaul.edu/csc299a7/default/user/done
+\end{verbatim}
+
+Note you only need to open the ``register'' and the ``index'' and perhaps the ``logout'' link. Everything is handled by clicking and form redirections automatically.
+
+\end{document}

@@ -1,0 +1,86 @@
+\documentclass[12pt]{article}
+
+\usepackage{graphicx}
+\usepackage{url}
+\begin{document}
+
+\section{CSC299 - Fall 2015 - Lab Assignment 2}
+
+\subsection*{IMPORTANT INSTRUCTIONS}
+
+Use this URL to verify your progress:
+\begin{verbatim}
+https://mdp.cdm.depaul.edu/csc299
+\end{verbatim}
+
+Login into:
+\begin{verbatim}
+mdp.cdm.depaul.deu
+\end{verbatim}
+
+Under your csc299 folder create a new folder called {\tt lab02} and, under the latter, create a new file called {\tt README.md}. This file should start with:
+
+\begin{verbatim}
+Name: <yourname>
+StudentId: <yourstudentid>
+Email: <youremail>
+\end{verbatim}
+
+Put the answers to the questions belong in the file
+{\tt ~/csc299/lab02/README.md}.
+
+After completing each task below remember to do:
+
+\begin{verbatim}
+cd ~/csc299
+git add .
+git commit -a -m "task completed"
+git push
+\end{verbatim}
+
+else I will not receive your work.
+
+\subsection{Task 1 (3 points)}
+
+Change folder and go under {\tt ~/csc299/lab02}.
+
+Create a program called {\tt program1.py} which contains:
+
+\begin{verbatim}
+from random import randint
+myfile = open('data.csv','w')
+for k in range(1000):
+    myfile.write(', '.join([str(randint(0,1000)) for i in '0123'])+'\n')
+\end{verbatim}
+
+Run it and make sure it creates a CSV file which contains 4 columns and 1000 rows of random numbers.
+
+\subsection{Task 2 (4 points)}
+
+Write a program in the same folder as the one above, called {\tt program2.py} which when called with:
+
+\begin{verbatim}
+python program2.py
+\end{verbatim}
+
+reads the above {\tt data.csv} file and computes the totals of each column and stores in a file {\tt sums.csv} the 4 numbers in one line separated by a comma. For example:
+
+\begin{verbatim}
+12344, 21123, 41212, 31244
+\end{verbatim}
+
+\subsection{Task 3 (4 points)}
+
+Write a program in the same folder as the one above, called {\tt program3.py} which takes no input. The program will produce a file called {\tt bincount.csv} which contains:
+
+\begin{verbatim}
+1, 10
+2, 7
+3, 10
+...
+\end{verbatim}
+
+The first column is a progressive number and the second column counts the number of files in {\tt /bin/} which have a filename length equal to the value in the first column. Example 10 files of length 1, 7 files of length 2, etc.
+
+Tip: use {\tt os.listdir(...)}.
+\end{document}

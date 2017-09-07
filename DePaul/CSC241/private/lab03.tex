@@ -1,0 +1,81 @@
+\documentclass[12pt]{article}
+\usepackage{upquote}
+
+\begin{document}
+
+{\Large CSC241 Winter 2014 - Lab Assignment 3}
+
+\section{Program 1 (2 points)}
+
+\noindent
+The DNA of living creatures consists of a double helix of four types of nucleotides,               
+commonly referred to ATGC. They came in pairs A-T, T-A, G-C, C-G.                                  
+This means that a ATGC sequence of one strand corresponds to the TACG on the other strand.         
+Write a program that given one strand of DNA, in the form of one input string,                     
+computes the complementary strand. For example:
+\begin{verbatim}
+input: ATGCATGC
+output: TACGTACG
+\end{verbatim}
+The program file must be called {\tt a3p1.py}
+
+\noindent When done you can grade it automatically with
+\begin{verbatim}
+$ grade a3p1.py
+\end{verbatim}
+
+\section{Program 2 (2 points)}
+
+\noindent 
+Consider a chessboard. Each cell in the chessboard has two coordinates (x,y) for example (0,0),    
+(0,1),(1,1),(2,3),etc. Now consider a simple game where you start on cell (0,0). The game          
+repeatedly asks you to input a string. If you input U it moves up (x=x+1),                         
+if you input D it moves down, if you input L it moves left (y=y-1),                                
+if you move input R it moves right, and if you input Q it prints the coordinates                   
+of the cell where where you are, in the form ``(4,5)'' (notice brackets but not spaces).             
+\begin{verbatim}
+input: U
+input: U
+input: U
+input: L
+input: Q
+output: (3,-1)
+\end{verbatim}
+    
+The program must be called ({\tt a3p2.py}) 
+
+\noindent When done you can grade it automatically with
+\begin{verbatim}
+$ grade a3p2.py
+\end{verbatim}
+
+\section{Program 3 (2 points)}
+
+\noindent Write a program ({\tt a3p3.py})
+that inputs a string and prints 'True' if the world is a palindrome,               
+'False' otherwise.
+\begin{verbatim}
+$ grade a3p3.py
+\end{verbatim}
+
+\section{Program 4 (2 points)}
+\noindent Write a program ({\tt a3p4.py})
+Which contains the following code:
+\begin{verbatim}
+def getMetamorphosis():
+    return open('/tmp/kafka.txt').read()
+
+def countWord(s, p):
+    counter = 0
+    for k in range(0,len(s)-len(p)):
+        # FILL HERE
+    return counter
+
+print(countWord(getMetamorphosis(), 'Gregor'))
+\end{verbatim}
+This program is supposed to count the number of instances of the word ``Gregor'' in Kafka's Metamorphosis. Complete the body of the function countWord.
+
+\begin{verbatim}
+$ grade a3p4.py  
+\end{verbatim}
+\end{document}

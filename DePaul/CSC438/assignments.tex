@@ -1,0 +1,68 @@
+\documentclass[12pt]{article}
+
+\title{CSC438 Assignments for Fall 2013}
+
+\author{Prof. Massimo Di Pierro}
+
+\begin{document}
+
+\maketitle
+
+\section*{General Remarks}
+
+\begin{itemize}
+\item These are individual assignments. You can discuss them with your colleagues but you cannot collaborate on the solution.
+\item Assignments will be peer graded using {\tt http://www.crowdgrader.org/}
+\item Your solutions will be cross checked using turnit-in.
+\item Late assignments are not accepted under any condition.
+\item All programs must be indented and commented
+\item The total is 100 points.
+\item You can get points by helping reporting errors, bugs and typos.
+\item Points will be converted to letter grades based on this scale.
+\item All code must include functional tests (WebClient)
+\end{itemize}
+
+\section*{crowdgrader notes}
+\begin{itemize}
+\item Upload your code as a web2py.app.name.w2p un crowdgrader.
+\item Crowdgrader will assign you other projects for you to grade.
+\item Download the w2p files assigned to you and upload them in your web2py bersion under different names (project1, project2, etc.).
+\item Grade the projects assigned to you within one week.
+\end{itemize}
+
+When grading your peers' code you should take into consideration the following:
+\begin{itemize}
+\item Does the code work? (make sure you try it!)
+\item Does it do what it is supposed to do?
+\item Is the code easy to use?
+\item Is the code well explained?
+\item If the code does not work, would you be able to fix it easily?
+\end{itemize}
+
+\section{Assignment 1 (due Sep 29, 15 points)}
+
+Build an application that allows users to share files (or images or text or code snippets) with friends and collaborators. 
+
+Imagine you have to send a picture to many friends. Instead of emailing the image to all of them, you would upload the image into the system and email your friends a link to the image. The application must allow users to login, register and post the file. Upon posting the file, the application must show the user a unique link that you can be used to download the uploaded file. Extra points: allow logged-in users to post comments about the file.
+
+\section{Assignment 2 (due Oct 13, 15 points)}
+
+Create a multi-user todo list. Every user can add a todo item and assign it to himself/herself or to somebody else. If the item is assigned to somebody else, the assignee can accept the item, reject it, and/or mark as completed. Make sure that only the author and the assignee of a todo item can see it.
+
+\section{Assignment 3 (due Oct 27, 15 points)}
+
+Modify the todo list application to allow users to post comments about the item. Comments can include attachments. Add an expiration to each todo item and add email reminders to the author and the assignee of the todo item. Integrate it with the file sharing app of assignment one. Find a good looking layout online and apply it to your application. Package the layout as a plugin for others to use. The layout must support menus, authentication links and web2py.js.  Extra points: posting comments uses Ajax.
+
+\section{Assignment 4 (due Nov 10, 15 points)}
+
+Incude functional tests for your app using the webclient.py API.
+
+Add web services to the TODO list so that users can download the todo list via REST (xml/json), via RSS, and via ICS. Also add the ability to submit new items via REST(xml/json) and via XMLRPC. Provide a working client code to use for testing.
+
+\section{Final project (40 points)}
+
+You can work in groups of 1,2, or 3 people (no more). By week 4 you must have identified the members of the group, the roles of said members, and provide a project description with clear deliverables.
+
+The project can consist of a new web2py application, an improvement to the framework, or an improvement to an existing application. The project needs to be discussed in advance with Prof. Di Pierro and must be approved. More details will be discussed in class.
+
+\end{document}

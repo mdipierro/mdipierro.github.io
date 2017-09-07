@@ -1,0 +1,53 @@
+\documentclass[12pt]{article}
+
+\begin{document}
+
+{\LARGE CSC431 final project}
+
+\section{Option 1}
+
+Modify the Trader program to implement the following strategies:
+
+\begin{itemize} 
+\item  when the adjusted closing price grows (as measured by fitting the previous week) sell, else buy. 
+\item  when the adjusted closing price grows (as measured by fitting the previous week) buy, else sell. 
+\item  when the adjusted closing price is convex (as measured by fitting the previous week) sell, else buy. 
+\item  when the adjusted closing price is convex (as measured by fitting the previous week) buy, else sell. 
+\item  when the volume in dollars (current dollars) grows (as measured by fitting the previous week) sell, else buy. 
+\item  when the volume in dollars (current dollars) grows (as measured by fitting the previous week) buy, else sell. 
+\end{itemize}
+Back test each of the following strategies on each of the SP100 stocks (the list of symbols is in the nlib.py file) for the year 2013. Produce a short paper (5-10 pages) describing the problem, the strategies, the code, and the results of the backtest. Sort the strategies from the best to the worst. For each strategy and one stock of your choice, produce plots to show cash flow over time. Discuss whether the results would have been different for the year 2007.
+
+Add your code, indented and commeted as appendinx. You can use nlib or numpy/scypy/sympy.
+
+\section{Option 2}
+
+You are trying to land a remote controlled speceship on Mars. You have to center a given landing spot.
+You have the ability to repeat the experiment and adjust the input power of the spaceship.
+
+You try 10 times and obtain the following results where the input is the power, the output is the distance from the desired landing spot, and error is the uncertainty in the measurement of the distance.
+
+\begin{tabular}{ccc} \hline
+input & output & error \\ \hline
+0 & 895.5 & 1.2 \\
+1 & 836.1 & 1.3 \\
+2 & 778.8 & 1.1 \\
+3 & 723.2 & 1.2 \\
+4 & 670.9 & 1.4 \\
+5 & 620.4 & 1.2 \\
+6 & 571.5 & 1.6 \\
+7 & 523.9 & 1.2 \\
+8 & 479.8 & 1.5 \\
+9 & 435.0 & 1.1 \\ \hline
+\end{tabular}
+
+Assume the relation between input and output is quadratic. What should be the input power to land at the desired spot?
+
+Write a short paper (5-10 pages) describing the problem and your solution. Also describe the algorithms that you use for solving the problem. In a final paragraph describe the possible sources of error in your solution (data error, modeling error, systematic error, computational error).
+
+Produce a plot of the data superimposed to the results expected from your quadratic model.
+
+You do not need any Physics knowledge to solve this problem because all the physics is encoded in the relation between the input and the output which you are modeling as a quadratic relation.
+
+Add your code, indented and commeted as appendinx. You can use nlib or numpy/scypy/sympy.
+\end{document}

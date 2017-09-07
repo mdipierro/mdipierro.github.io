@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+    <style type="text/css">
+
+path.arc {
+  cursor: move;
+  fill: #fff;
+}
+
+.node {
+  font-size: 10px;
+}
+
+.node:hover {
+  fill: #1f77b4;
+}
+
+.link {
+  fill: none;
+  stroke: #1f77b4;
+  stroke-opacity: .4;
+  pointer-events: none;
+}
+
+.link.source, .link.target {
+  stroke-opacity: 1;
+  stroke-width: 2px;
+}
+
+.node.target {
+  fill: #d62728 !important;
+}
+
+.link.source {
+  stroke: #d62728;
+}
+
+.node.source {
+  fill: #2ca02c;
+}
+
+.link.target {
+  stroke: #2ca02c;
+}
+
+    </style>
+  </head>
+  <body>
+    <h2>
+      Dependencies for courses that list more than 2 prerequisites<br/>
+      (user the mouse to highlight)
+    </h2>
+    <div style="position:absolute;bottom:0;font-size:18px;">tension: <input style="position:relative;top:3px;" type="range" min="0" max="100" value="85"></div>
+    <script type="text/javascript" src="http://mbostock.github.com/d3/talk/20111116/d3/d3.js"></script>
+    <script type="text/javascript" src="http://mbostock.github.com/d3/talk/20111116/d3/d3.layout.js"></script>
+    <script type="text/javascript" src="http://mbostock.github.com/d3/talk/20111116/packages.js"></script>
+    <script type="text/javascript">
+
+var w = 1280,
+    h = 800,
+    rx = w / 2,
+    ry = h / 2,
+    m0,
+    rotate = 0;
+
+var splines = [];
+
+var cluster = d3.layout.cluster()
+    .size([360, ry - 120])
+    .sort(function(a, b) { return d3.ascending(a.key, b.key); });
+
+var bundle = d3.layout.bundle();
+
+var line = d3.svg.line.radial()
+    .interpolate("bundle")
+    .tension(.65)
+    .radius(function(d) { return d.y; })
+    .angle(function(d) { return d.x / 180 * Math.PI; });
+
+// Chrome 15 bug: <http://code.google.com/p/chromium/issues/detail?id=98951>
+var div = d3.select("body").insert("div", "h2")
+    .style("top", "-80px")
+    .style("left", "-160px")
+    .style("width", w + "px")
+    .style("height", w + "px")
+    .style("position", "absolute");
+
+var svg = div.append("svg:svg")
+    .attr("width", w)
+    .attr("height", w)
+  .append("svg:g")
+    .attr("transform", "translate(" + rx + "," + ry + ")");
+
+svg.append("svg:path")
+    .attr("class", "arc")
+    .attr("d", d3.svg.arc().outerRadius(ry - 120).innerRadius(0).startAngle(0).endAngle(2 * Math.PI))
+    .on("mousedown", mousedown);
+
+import_data = function(classes) {
+  var nodes = cluster.nodes(packages.root(classes)),
+      links = packages.imports(nodes),
+      splines = bundle(links);
+
+  var path = svg.selectAll("path.link")
+      .data(links)
+    .enter().append("svg:path")
+      .attr("class", function(d) { return "link source-" + d.source.key + " target-" + d.target.key; })
+      .attr("d", function(d, i) { return line(splines[i]); });
+
+  svg.selectAll("g.node")
+      .data(nodes.filter(function(n) { return !n.children; }))
+    .enter().append("svg:g")
+      .attr("class", "node")
+      .attr("id", function(d) { return "node-" + d.key; })
+      .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+    .append("svg:text")
+      .attr("dx", function(d) { return d.x < 180 ? 8 : -8; })
+      .attr("dy", ".31em")
+      .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+      .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })
+      .text(function(d) { return d.key; })
+      .on("mouseover", mouseover)
+      .on("mouseout", mouseout);
+
+  d3.select("input[type=range]").on("change", function() {
+    line.tension(this.value / 100);
+    path.attr("d", function(d, i) { return line(splines[i]); });
+  });
+};
+
+import_data(
+[{'name':'TDC311','size':1,'imports':[]},{'name':'ANI436','size':1,'imports':[]},{'name':'GPH539','size':1,'imports':['GPH425', 'ANI439']},{'name':'GAM453','size':1,'imports':['CSC407']},{'name':'DC333','size':1,'imports':['DC275']},{'name':'GPH438','size':1,'imports':['GPH425', 'GPH469']},{'name':'CSC343','size':1,'imports':['CSC373']},{'name':'GD394','size':1,'imports':['GD200', 'GD230']},{'name':'SE556','size':1,'imports':['CSC407']},{'name':'SE554','size':1,'imports':[]},{'name':'IS435','size':1,'imports':[]},{'name':'IM315','size':1,'imports':[]},{'name':'ANI452','size':1,'imports':[]},{'name':'ANI451','size':1,'imports':['ANI310', 'ANI450']},{'name':'IS356','size':1,'imports':[]},{'name':'ANI456','size':1,'imports':['ANI201']},{'name':'ANI455','size':1,'imports':['ANI201']},{'name':'SE558','size':1,'imports':['CSC407']},{'name':'ANI366','size':1,'imports':['DC275']},{'name':'PM556','size':1,'imports':[]},{'name':'GAM476','size':1,'imports':[]},{'name':'IS535','size':1,'imports':['SE477', 'ECT455']},{'name':'IT373','size':1,'imports':['CSC383', 'CSC393']},{'name':'CSC529','size':1,'imports':['ECT584']},{'name':'GAM376','size':1,'imports':['CSC383', 'CSC393']},{'name':'GAM374','size':1,'imports':['CSC393', 'CSC309', 'GPH321']},{'name':'CSC521','size':1,'imports':[]},{'name':'CSC489','size':1,'imports':['CSC444', 'CSC421']},{'name':'ANI201','size':1,'imports':[]},{'name':'GPH425','size':1,'imports':[]},{'name':'DC309','size':1,'imports':[]},{'name':'SE333','size':1,'imports':['CSC383', 'SE330']},{'name':'SE330','size':1,'imports':[]},{'name':'TDC560','size':1,'imports':['TDC460', 'TDC463']},{'name':'DC305','size':1,'imports':[]},{'name':'DC304','size':1,'imports':[]},{'name':'GAM490','size':1,'imports':['GAM474', 'CSC407']},{'name':'TDC365','size':1,'imports':[]},{'name':'TDC594','size':1,'imports':['TDC511', 'TDC560']},{'name':'TDC363','size':1,'imports':[]},{'name':'GPH213','size':1,'imports':[]},{'name':'CSC333','size':1,'imports':[]},{'name':'SE549','size':1,'imports':[]},{'name':'CSC331','size':1,'imports':[]},{'name':'DC345','size':1,'imports':[]},{'name':'TDC368','size':1,'imports':['CSC309']},{'name':'TDC369','size':1,'imports':['TDC365']},{'name':'GD230','size':1,'imports':[]},{'name':'ANI355','size':1,'imports':['ANI201']},{'name':'ANI356','size':1,'imports':['ANI201']},{'name':'CSC433','size':1,'imports':[]},{'name':'IS321','size':1,'imports':[]},{'name':'IS322','size':1,'imports':['IS321']},{'name':'CSC325','size':1,'imports':[]},{'name':'TDC390','size':1,'imports':['TDC363', 'TDC365']},{'name':'GAM380','size':1,'imports':['CSC393']},{'name':'SE325','size':1,'imports':[]},{'name':'CNS466','size':1,'imports':[]},{'name':'GD360','size':1,'imports':['GD200', 'GD230']},{'name':'ANI344','size':1,'imports':[]},{'name':'IS590','size':1,'imports':[]},{'name':'GPH395','size':1,'imports':[]},{'name':'TDC371','size':1,'imports':[]},{'name':'ANI352','size':1,'imports':[]},{'name':'CSC421','size':1,'imports':[]},{'name':'TDC372','size':1,'imports':[]},{'name':'DC395','size':1,'imports':['DC310']},{'name':'CSC587','size':1,'imports':['HCI460']},{'name':'DC390','size':1,'imports':['DC310']},{'name':'ANI450','size':1,'imports':['GPH438']},{'name':'ANI439','size':1,'imports':[]},{'name':'ANI438','size':1,'imports':[]},{'name':'CSC348','size':1,'imports':['CSC383', 'CSC393', 'CSC373']},{'name':'HCI423','size':1,'imports':[]},{'name':'ANI435','size':1,'imports':[]},{'name':'CSC347','size':1,'imports':['CSC383', 'CSC393']},{'name':'CSC344','size':1,'imports':['CSC383']},{'name':'ANI340','size':1,'imports':['ANI220', 'ANI240']},{'name':'ANI431','size':1,'imports':['ANI300', 'ANI430']},{'name':'ANI430','size':1,'imports':['GPH438']},{'name':'ANI433','size':1,'imports':[]},{'name':'PM535','size':1,'imports':['SE477', 'ECT455']},{'name':'CSC327','size':1,'imports':['CSC383']},{'name':'DC371','size':1,'imports':[]},{'name':'ECT360','size':1,'imports':[]},{'name':'ANI220','size':1,'imports':['ANI201']},{'name':'GAM394','size':1,'imports':['GAM374']},{'name':'ANI222','size':1,'imports':[]},{'name':'GAM391','size':1,'imports':['CSC383', 'CSC393']},{'name':'ANI351','size':1,'imports':['ANI310', 'ANI450']},{'name':'TDC468','size':1,'imports':['TDC463', 'CSC435']},{'name':'GAM333','size':1,'imports':[]},{'name':'TDC460','size':1,'imports':[]},{'name':'TDC463','size':1,'imports':[]},{'name':'GAM330','size':1,'imports':[]},{'name':'IS500','size':1,'imports':['SE477']},{'name':'ECT330','size':1,'imports':[]},{'name':'SE350','size':1,'imports':['CSC383']},{'name':'CSC454','size':1,'imports':[]},{'name':'SE352','size':1,'imports':['CSC383']},{'name':'DC411','size':1,'imports':[]},{'name':'DC410','size':1,'imports':['DC275']},{'name':'ANI420','size':1,'imports':['ANI201']},{'name':'CSC452','size':1,'imports':[]},{'name':'GAM491','size':1,'imports':['CSC407']},{'name':'HCI430','size':1,'imports':[]},{'name':'CSC358','size':1,'imports':['CSC383', 'CSC393']},{'name':'DC504','size':1,'imports':['DC403']},{'name':'CSC355','size':1,'imports':['CSC383', 'CSC393', 'CSC373']},{'name':'CSC357','size':1,'imports':['CSC383', 'CSC393']},{'name':'CSC321','size':1,'imports':['CSC383', 'CSC393']},{'name':'CSC299','size':1,'imports':[]},{'name':'SE529','size':1,'imports':[]},{'name':'ANI480','size':1,'imports':['ANI201']},{'name':'DC310','size':1,'imports':['DC275']},{'name':'DC311','size':1,'imports':[]},{'name':'GAM245','size':1,'imports':[]},{'name':'ANI339','size':1,'imports':[]},{'name':'ANI336','size':1,'imports':[]},{'name':'HCI530','size':1,'imports':['HCI430']},{'name':'CSC407','size':1,'imports':[]},{'name':'ANI330','size':1,'imports':[]},{'name':'GPH575','size':1,'imports':['GPH469']},{'name':'ANI390','size':1,'imports':['ANI201']},{'name':'DC400','size':1,'imports':[]},{'name':'GPH255','size':1,'imports':[]},{'name':'DC403','size':1,'imports':[]},{'name':'GAM342','size':1,'imports':['GAM341']},{'name':'GD200','size':1,'imports':[]},{'name':'GAM340','size':1,'imports':[]},{'name':'GAM341','size':1,'imports':['GAM245']},{'name':'DC275','size':1,'imports':[]},{'name':'IS376','size':1,'imports':[]},{'name':'IS375','size':1,'imports':[]},{'name':'CSC444','size':1,'imports':[]},{'name':'CSC447','size':1,'imports':['CSC407']},{'name':'IS370','size':1,'imports':[]},{'name':'IT430','size':1,'imports':[]},{'name':'CNS320','size':1,'imports':['CSC393', 'CSC373']},{'name':'IS574','size':1,'imports':['IS435']},{'name':'ANI240','size':1,'imports':['ANI201']},{'name':'IS570','size':1,'imports':[]},{'name':'VFX278','size':1,'imports':[]},{'name':'IS579','size':1,'imports':[]},{'name':'CSC352','size':1,'imports':['CSC309']},{'name':'DC360','size':1,'imports':['DC275']},{'name':'HCI445','size':1,'imports':[]},{'name':'DC510','size':1,'imports':[]},{'name':'HCI520','size':1,'imports':[]},{'name':'ANI493','size':1,'imports':[]},{'name':'IT232','size':1,'imports':[]},{'name':'ANI490','size':1,'imports':['ANI201']},{'name':'DC471','size':1,'imports':[]},{'name':'CNS378','size':1,'imports':['TDC311']},{'name':'IS485','size':1,'imports':['IS422', 'IS485']},{'name':'SE582','size':1,'imports':['IS485']},{'name':'ECT410','size':1,'imports':[]},{'name':'GAM350','size':1,'imports':['CSC383', 'CSC393']},{'name':'VFX391','size':1,'imports':['DC390']},{'name':'GPH465','size':1,'imports':['GPH425']},{'name':'GD211','size':1,'imports':[]},{'name':'CSC435','size':1,'imports':['CSC407']},{'name':'CSC376','size':1,'imports':['CSC383', 'CSC393']},{'name':'CSC375','size':1,'imports':['CSC373']},{'name':'SE525','size':1,'imports':['CSC435']},{'name':'CSC373','size':1,'imports':['CSC383', 'CSC393']},{'name':'CSC371','size':1,'imports':['CSC383', 'CSC393']},{'name':'GD210','size':1,'imports':[]},{'name':'CSC471','size':1,'imports':['CSC407']},{'name':'SE468','size':1,'imports':[]},{'name':'HCI514','size':1,'imports':['HCI445', 'HCI460']},{'name':'GPH345','size':1,'imports':['GPH212']},{'name':'ECT584','size':1,'imports':[]},{'name':'HCI511','size':1,'imports':['HCI445', 'HCI460']},{'name':'HCI512','size':1,'imports':['HCI460']},{'name':'HCI513','size':1,'imports':['IS422', 'HCI430']},{'name':'GPH339','size':1,'imports':['GPH325', 'GPH321', 'ANI339']},{'name':'GPH348','size':1,'imports':['ANI201']},{'name':'CSC436','size':1,'imports':['CSC435']},{'name':'TDC511','size':1,'imports':['TDC460', 'TDC463']},{'name':'HCI454','size':1,'imports':[]},{'name':'VFX478','size':1,'imports':['VFX278']},{'name':'TDC514','size':1,'imports':['TDC463']},{'name':'GAM450','size':1,'imports':[]},{'name':'CNS394','size':1,'imports':['CNS378']},{'name':'ANI310','size':1,'imports':[]},{'name':'DC398','size':1,'imports':['DC310']},{'name':'ANI378','size':1,'imports':[]},{'name':'CSC478','size':1,'imports':[]},{'name':'GPH469','size':1,'imports':[]},{'name':'DC490','size':1,'imports':['DC310']},{'name':'CNS366','size':1,'imports':[]},{'name':'DC505','size':1,'imports':[]},{'name':'GD216','size':1,'imports':[]},{'name':'SE368','size':1,'imports':['SE330']},{'name':'SE477','size':1,'imports':['ECT455']},{'name':'ANI479','size':1,'imports':[]},{'name':'ANI478','size':1,'imports':[]},{'name':'CSC309','size':1,'imports':[]},{'name':'GD380','size':1,'imports':['GD200', 'GD230']},{'name':'IS553','size':1,'imports':['IS422']},{'name':'PM577','size':1,'imports':['IS556', 'PM556']},{'name':'GD340','size':1,'imports':['GD200', 'GD230']},{'name':'IS556','size':1,'imports':[]},{'name':'IS313','size':1,'imports':[]},{'name':'ANI300','size':1,'imports':[]},{'name':'GD350','size':1,'imports':['GD200', 'GD210', 'GD230']},{'name':'GD260','size':1,'imports':[]},{'name':'GPH358','size':1,'imports':[]},{'name':'ANI260','size':1,'imports':[]},{'name':'HCI460','size':1,'imports':[]},{'name':'GD215','size':1,'imports':[]},{'name':'CSC542','size':1,'imports':[]},{'name':'GPH325','size':1,'imports':[]},{'name':'GAM690','size':1,'imports':['GAM475']},{'name':'GAM691','size':1,'imports':['GAM474']},{'name':'GPH212','size':1,'imports':[]},{'name':'CSC383','size':1,'imports':[]},{'name':'CSC380','size':1,'imports':['CSC383', 'CSC393']},{'name':'DC344','size':1,'imports':[]},{'name':'DC343','size':1,'imports':[]},{'name':'DC341','size':1,'imports':[]},{'name':'ANI432','size':1,'imports':[]},{'name':'IT278','size':1,'imports':['IT232']},{'name':'GAM362','size':1,'imports':[]},{'name':'GPH321','size':1,'imports':['CSC383', 'CSC393']},{'name':'DC451','size':1,'imports':[]},{'name':'IM322','size':1,'imports':[]},{'name':'IS422','size':1,'imports':[]},{'name':'ANI444','size':1,'imports':['ANI446']},{'name':'ANI445','size':1,'imports':[]},{'name':'ANI446','size':1,'imports':[]},{'name':'GD395','size':1,'imports':['GD200', 'GD230']},{'name':'ANI440','size':1,'imports':[]},{'name':'CSC555','size':1,'imports':['ECT584']},{'name':'LSP120','size':1,'imports':['LSP120', 'LSP120']},{'name':'LSP121','size':1,'imports':['LSP120', 'LSP120', 'LSP121', 'LSP121']},{'name':'CNS450','size':1,'imports':[]},{'name':'PM570','size':1,'imports':[]},{'name':'GD310','size':1,'imports':['GD215', 'GD216']},{'name':'ANI375','size':1,'imports':['ANI340', 'DC310']},{'name':'SE560','size':1,'imports':['CSC383']},{'name':'ECT359','size':1,'imports':[]},{'name':'GD300','size':1,'imports':['GD200', 'GD230']},{'name':'ECT310','size':1,'imports':[]},{'name':'CSC495','size':1,'imports':[]},{'name':'GAM474','size':1,'imports':[]},{'name':'GAM475','size':1,'imports':['CSC407']},{'name':'CSC559','size':1,'imports':['CSC521']},{'name':'GAM477','size':1,'imports':['GAM474']},{'name':'ECT455','size':1,'imports':['ECT410', 'HCI430']},{'name':'TDC362','size':1,'imports':['TDC311', 'CSC373']},{'name':'CSC393','size':1,'imports':['CSC309']},{'name':'CSC552','size':1,'imports':['CSC407']},{'name':'CSC551','size':1,'imports':['CSC435', 'TDC463']},{'name':'GPH329','size':1,'imports':['GPH321', 'CSC393']}]
+
+);
+
+
+
+d3.select(window)
+    .on("mousemove", mousemove)
+    .on("mouseup", mouseup);
+
+function mouse(e) {
+  return [e.pageX - rx, e.pageY - ry];
+}
+
+function mousedown() {
+  m0 = mouse(d3.event);
+  d3.event.preventDefault();
+}
+
+function mousemove() {
+  if (m0) {
+    var m1 = mouse(d3.event),
+        dm = Math.atan2(cross(m0, m1), dot(m0, m1)) * 180 / Math.PI;
+    div.style("-webkit-transform", "translate3d(0," + (ry - rx) + "px,0)rotate3d(0,0,0," + dm + "deg)translate3d(0," + (rx - ry) + "px,0)");
+  }
+}
+
+function mouseup() {
+  if (m0) {
+    var m1 = mouse(d3.event),
+        dm = Math.atan2(cross(m0, m1), dot(m0, m1)) * 180 / Math.PI;
+
+    rotate += dm;
+    if (rotate > 360) rotate -= 360;
+    else if (rotate < 0) rotate += 360;
+    m0 = null;
+
+    div.style("-webkit-transform", "rotate3d(0,0,0,0deg)");
+
+    svg
+        .attr("transform", "translate(" + rx + "," + ry + ")rotate(" + rotate + ")")
+      .selectAll("g.node text")
+        .attr("dx", function(d) { return (d.x + rotate) % 360 < 180 ? 8 : -8; })
+        .attr("text-anchor", function(d) { return (d.x + rotate) % 360 < 180 ? "start" : "end"; })
+        .attr("transform", function(d) { return (d.x + rotate) % 360 < 180 ? null : "rotate(180)"; });
+  }
+}
+
+function mouseover(d) {
+  svg.selectAll("path.link.target-" + d.key)
+      .classed("target", true)
+      .each(updateNodes("source", true));
+
+  svg.selectAll("path.link.source-" + d.key)
+      .classed("source", true)
+      .each(updateNodes("target", true));
+}
+
+function mouseout(d) {
+  svg.selectAll("path.link.source-" + d.key)
+      .classed("source", false)
+      .each(updateNodes("target", false));
+
+  svg.selectAll("path.link.target-" + d.key)
+      .classed("target", false)
+      .each(updateNodes("source", false));
+}
+
+function updateNodes(name, value) {
+  return function(d) {
+    if (value) this.parentNode.appendChild(this);
+    svg.select("#node-" + d[name].key).classed(name, value);
+  };
+}
+
+function cross(a, b) {
+  return a[0] * b[1] - a[1] * b[0];
+}
+
+function dot(a, b) {
+  return a[0] * b[0] + a[1] * b[1];
+}
+
+    </script>
+  </body>
+</html>

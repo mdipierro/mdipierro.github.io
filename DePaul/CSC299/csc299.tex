@@ -1,0 +1,1414 @@
+\documentclass[justified,sixbynine]{tufte-book}
+\title{\LARGE Web Automation With Python}
+\author{Massimo Di Pierro}
+\publisher{Experts4Solutions}
+
+% For nicely typeset tabular material
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{makeidx}
+\usepackage{tocloft}
+\usepackage{parskip}
+\usepackage{upquote}
+\usepackage{verbatim}
+\makeindex
+\usepackage{listings}
+\usepackage{url}
+\usepackage[utf8x]{inputenc}
+
+\sloppy
+
+\def\stackunder#1#2{\mathrel{\mathop{#2}\limits_{#1}}}
+\definecolor{lg}{rgb}{0.9,0.9,0.9}
+\definecolor{dg}{rgb}{0.3,0.3,0.3}
+\def\ft{\small\tt}
+\def\func{\textrm}
+\def\subsubsection#1{{\bf #1}}
+
+\theoremstyle{plain}% default
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemmma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem*{corollary}{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{conjecture}{Conjecture}[section]
+\newtheorem{example}{Example}[section]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{note}{Note}
+\newtheorem{case}{Case}
+
+\lstset{language=Python,
+   breaklines=true, basicstyle=\ttfamily\color{black}\footnotesize,
+   keywordstyle=\bf\ttfamily,
+   commentstyle=\it\ttfamily,
+   stringstyle=\color{dg}\it\ttfamily,
+   numbers=left, numberstyle=\color{dg}\tiny, stepnumber=1, numbersep=5pt,
+   % frame=lr,
+   backgroundcolor=\color{lg},
+   tabsize=4, showspaces=false,
+   showstringspaces=false,
+   aboveskip=6pt,
+   belowskip=-3pt
+}
+
+% Disable Tufte-style captions for ctables
+\makeatletter % allows @ in macro names
+\def\@ctblCaption{
+   \ifx\@ctblcap\undefined\let\@ctblcap\@ctblcaption\fi
+   \ifx\@ctblcaption\empty\else
+      \gdef\@ctblcaptionarg{\ifx\@ctbllabel\empty\else\label{\@ctbllabel}\fi
+         \@ctblcaption\ \@ctblcontinued\strut}
+      \ifx\@ctblcap\empty
+         \caption[]{\@ctblcaptionarg}
+      \else
+         \caption[\@ctblcap]{\@ctblcaptionarg}
+      \fi
+   \fi
+}
+\makeatother % restores original meaning of @
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+% Generates the index
+\begin{document}
+
+\frontmatter
+
+\maketitle
+
+\thispagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2mm}
+{\footnotesize
+\vskip 1in
+Copyright 2008-2013 by Massimo Di Pierro. All rights reserved.
+\vskip 1cm
+
+THE CONTENT OF THIS BOOK IS PROVIDED UNDER THE TERMS OF THE CREATIVE COMMONS PUBLIC LICENSE BY-NC-ND 3.0.
+
+\url{http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode}
+
+THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
+
+BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
+
+Limit of Liability/Disclaimer of Warranty: While the publisher and
+author have used their best efforts in preparing this book, they
+make no representations or warranties with respect to the accuracy
+or completeness of the contents of this book and specifically
+disclaim any implied warranties of merchantability or fitness for a
+particular purpose.  No warranty may be created ore extended by
+sales representatives or written sales materials.
+The advice and strategies contained herein may not be
+suitable for your situation. You should consult with a professional
+where appropriate.  Neither the publisher nor author shall be liable
+for any loss of profit or any other commercial damages, including
+but not limited to special, incidental, consequential, or other damages. \\ \\
+
+For more information about appropriate use of this material contact:
+
+\begin{verbatim}
+Massimo Di Pierro
+School of Computing
+DePaul University
+243 S Wabash Ave
+Chicago, IL 60604 (USA)
+Email: massimo.dipierro@gmail.com
+\end{verbatim}
+
+Library of Congress Cataloging-in-Publication Data: \\ \\
+ISBN: XXX-XXX-XXXX \\
+Build Date: \today
+}
+
+
+\newpage
+%\begin{center}
+%\noindent\fontsize{12}{18}\selectfont\itshape
+\nohyphenation
+\thispagestyle{empty}
+\phantom{placeholder}
+\vspace{2in}
+\hskip 3in
+{\it XXXXXXXXXXX }
+%\end{center}
+\newpage
+\thispagestyle{empty}
+\phantom {a}
+\newpage
+
+\setlength{\cftparskip}{\baselineskip}
+\tableofcontents
+
+\mainmatter
+\begin{fullwidth}
+
+\chapter*{Preface}
+
+Some of the text in these notes has been collected from Wikipedia and other online sources.
+
+\goodbreak\chapter{Introduction}
+
+Your account:
+
+\begin{lstlisting}
+> ssh user<yourid>@140.192.30.237
+\end{lstlisting}
+
+\goodbreak\chapter{Linux}
+
+\section{Access}
+
+In this course you will be using a Linux OS. There are many ways to use Linux. You can install it on your machine, with or without dual boot (dual boot is only recommended for experts), you can run it within a virtual machine (VMWare or VirtualBox for example), or you can access a remote Linux server.
+
+Assuming you have a Linux account on a remote server you can connect to it using one of the following ways:
+
+\begin{itemize}
+
+\item
+From another Linux/Unix/Mac terminal:
+\begin{lstlisting}
+> ssh <username>@<hostname>
+\end{lstlisting}
+for example:
+\begin{lstlisting}
+> ssh thomas.anderson@the.matrix.net
+\end{lstlisting}
+
+\item
+From Mac you can follow the same directions as Linux, but first you have to open Terminal. Search for ``Terminal'' in ``Spotlight''.
+
+\item
+From Windows you need to download PuTTy from
+\url{http://the.earth.li/~sgtatham/putty/latest/x86/putty.exe}
+and use the PuTTY GUI to insert the username and hostname.
+
+\item
+If you have a PythonAnywhere.com account, login there, then click on [Consoles] and [Start a new console][Bash]. PythonAnywhere provides a free Linux account in the cloud and they offer a Bash console shell you can access via the web browser.
+
+\end{itemize}
+
+\section{Bash Shell}
+
+The ``Bash shell'' is a command line processor. It allows you to interactively type and execute commands and runs inside a text window. There are many different shells, a.k.a. command line processors and they have a different syntax. For example the Bash shell understand ``bash'' commands; the Python shell understand ``Python'' commands. Even Windows has a shell (the ``Command Prompt'') which understand Windows commands. For now you will be using the Bash shell.
+
+Example of commands:
+
+\noindent What is my name?
+\begin{lstlisting}
+> whoami
+\end{lstlisting}
+\noindent Make a file called ``test.py'' and write ``print 1'' in it:
+\begin{lstlisting}
+> echo "print 1" > test.py
+\end{lstlisting}
+\noindent List all files in the current folder
+\begin{lstlisting}
+> ls
+\end{lstlisting}
+({\ft *} means everything and it is referred to as a wildcard).
+\noindent List all files ending in .py
+\begin{lstlisting}
+> ls *.py
+\end{lstlisting}
+\noindent List all files ending in .py with more details
+\begin{lstlisting}
+> ls -l *.py
+\end{lstlisting}
+\noindent Run the Python program test.py
+\begin{lstlisting}
+> python test.py
+\end{lstlisting}
+\noindent Delete all files ending in ~
+\begin{lstlisting}
+> rm *~
+\end{lstlisting}
+\noindent List the name of the current folder
+\begin{lstlisting}
+> pwd
+\end{lstlisting}
+\noindent Navigate to the parent of the current folder
+\begin{lstlisting}
+> cd ..
+\end{lstlisting}
+\noindent Navigate to the top folder (also known as file system root)
+\begin{lstlisting}
+> cd /
+\end{lstlisting}
+\noindent Navigate back to your home folder
+\begin{lstlisting}
+> cd ~
+\end{lstlisting}
+\noindent Make a new subfolder
+\begin{lstlisting}
+> mkdir work
+\end{lstlisting}
+\noindent Enter the subfolder
+\begin{lstlisting}
+> cd work
+\end{lstlisting}
+\noindent Create an empty file called ``test.txt''
+\begin{lstlisting}
+> touch test.txt
+\end{lstlisting}
+\noindent Step out of a folder
+\begin{lstlisting}
+> cd ..
+\end{lstlisting}
+\noindent Remove a folder and all its content
+\begin{lstlisting}
+> rm -r work
+\end{lstlisting}
+\noindent Print a list of all programs I am running
+\begin{lstlisting}
+> ps
+\end{lstlisting}
+\noindent Print a list of all programs running on this machine by or other user
+\begin{lstlisting}
+> ps -aux
+\end{lstlisting}
+\noindent List all running programs and sort them by resource consumption
+\begin{lstlisting}
+> top
+\end{lstlisting}
+(press ``q'' to quit)
+\noindent Start a program and send it in background
+\begin{lstlisting}
+> python &
+\end{lstlisting}
+(the program will be running but will not IO to console)
+\noindent Kill a program currently running
+\begin{lstlisting}
+> kill -9 <pid>
+\end{lstlisting}
+(here {\ft <pid>} is the process id of the program as listed by top and or ps).
+
+Practice with the above commands.
+
+{\ft pwd}, {\ft ls}, {\ft cd}, {\ft mkdir}, {\ft echo}, {\ft touch}, {\ft rm}, {\ft ps}, {\ft top}.
+
+Use them to explore the file system.
+
+Also notice that you can type an incomplete command and press [tab], the Bash shell will complete the command for you or give you a list of options. This is called autocomplete.
+
+Some operations require superuser access and the system will refuse to perform the action otherwise. If you are an administrator of a system, you can perform an action with administrator by prepending {\ft sudo} to any shell command.
+
+For example - DO NOT DO THIS, EVER! - delete everything in the file system:
+\begin{lstlisting}
+> cd /
+> sudo rm -r *
+\end{lstlisting}
+
+At this point you have the ability to create and browse files, folders, and running processes. A running program may be constituted of one or more processes (parallel programs may do more than one thing at once, thus more than one process).
+
+\section{Piping stdin and stdout}
+
+When using the {\ft echo} command we used the following example:
+
+\begin{lstlisting}
+> echo "print 1" > test.py
+\end{lstlisting}
+Here {\ft >} is a redirection operator. It takes the output of the {\ft echo} command which would normally print to console, and send it to the {\ft test.py} file. Similarly, one can redirect standard input which is normally received from the keyboard, and read it instead from a file using the {\ft <} operator.
+
+\section{Installing prepackaged apps}
+
+At this point we need to to learn how to install new programs and run them.
+How you do this depends on the version of Linux. I will assume Ubuntu. I will also assume you have superuser access else you will not be able to install programs.
+
+The easiest way to install prepackaged apps for Ubuntu is:
+\begin{lstlisting}
+> sudo apt-get install <appname>
+\end{lstlisting}
+For example
+\begin{lstlisting}
+> sudo apt-get install mc
+\end{lstlisting}
+Once installed we can start it with
+\begin{lstlisting}
+> mc
+\end{lstlisting}
+{\ft mc} is a useful extension to the Bash shell which allows us to type Bash commands and, at the same time, browse the file system in a visual way.
+
+We can also re-install existing apps to make sure we have the latest version, for example:
+\begin{lstlisting}
+> sudo apt-get install python
+\end{lstlisting}
+
+Other useful apps are the following
+\begin{lstlisting}
+> sudo apt-get install zip    # for compressing files
+> sudo apt-get install unzip  # for uncompressing
+> sudo apt-get install tar    # for packing files
+> sudo apt-get install emacs  # a file editor
+> sudo apt-get install python # the python interpreter
+> sudo apt-get install g++    # the C++ compiler
+> sudo apt-get install wget   # to download stuff from web
+> sudo apt-get install make   # to install source packages
+> sudo apt-get install build-essential
+> sudo apt-get install python2.7  # to make sure we have it
+> sudo apt-get install python-dev # useful development tools
+> sudo apt-get install git        # version control system
+\end{lstlisting}
+
+\section{Emacs in a nutshell}
+
+Emacs is a text editor. It understand the syntax of many programming languages and can help with development. It does not have a GUI but only a text based UI and you can perform various operations using command line shortcuts. Remember the most important of them all {\ft [crtl]+g}. if you get into trouble it brings you back to the edit interface.
+
+You can open a file with:
+\begin{lstlisting}
+> emacs test.py
+\end{lstlisting}
+\begin{tabular}{ll} \hline \\
+{\ft [crtl]+x+c} & Save and Exit \\
+{\ft [crtl]+s} & Search \\
+{\ft [meta]+<} & scroll to beginning \\
+{\ft [meta]+>} & scroll to end \\
+{\ft [meta]+X} & command prompt \\
+{\ft [tab]} & automatically re-indent the current line \\
+\hline
+\end{tabular}
+
+\section{Installing binary packages}
+
+Some time you may need to install binary packages. They come in the form of of tar g-zipped files. They look like: {\ft <appname>.tar.gz}
+
+They installed using the following process:
+
+\begin{lstlisting}
+> gunzip <appname>.tar.gz
+> tar xvf <appname>.tar
+> cd <appname-folder>
+> ./configure
+> make
+> sudo make install
+\end{lstlisting}
+
+Here <appname> is the name of the application being installed. <appname-folder> is the folder created by {\ft tar xvf ...}. The {\ft tar} command extracts the content of the {\ft .tar} file into a folder. The {\ft ./configure} step can take additional command line options and one should consult the documentation of the specific package for more details. {\ft make} compiles the application. {\ft make install} moves the compiled files in the proper place. If everything worked fine you can delete the {\ft <appname-folder>}.
+
+\section{Git Tutorial}
+
+(from the Git man pages)
+
+This tutorial explains how to import a new project into Git, make changes to it, and share changes with other developers.
+
+If you are instead primarily interested in using Git to fetch a project, for example, to test the latest version, you may prefer to start with the first two chapters of The Git User's Manual.
+
+It is a good idea to introduce yourself to Git with your name and public email address before doing any operation. The easiest way to do so is:
+
+\begin{lstlisting}
+> git config --global user.name "Your Name Comes Here"
+> git config --global user.email you@yourdomain.example.com
+\end{lstlisting}
+
+\subsection{Importing a new project}
+
+Assume you have a tar-ball project.tar.gz with your initial work. You can place it under Git revision control as follows.
+
+\begin{lstlisting}
+> tar xzf project.tar.gz
+> cd project
+> git init
+\end{lstlisting}
+
+Git will reply with:
+
+\begin{lstlisting}
+Initialized empty Git repository in .git/
+\end{lstlisting}
+
+You've now initialized the working directory--you may notice a new directory created, named ``.git''.
+
+Next, tell Git to take a snapshot of the contents of all files under the current directory (note the .), with git add:
+
+\begin{lstlisting}
+> git add .
+\end{lstlisting}
+
+This snapshot is now stored in a temporary staging area which Git calls the ``index''. You can permanently store the contents of the index in the repository with git commit:
+
+\begin{lstlisting}
+> git commit
+\end{lstlisting}
+
+This will prompt you for a commit message. You've now stored the first version of your project in Git.
+
+Making changes
+Modify some files, then add their updated contents to the index:
+
+\begin{lstlisting}
+> git add file1 file2 file3
+\end{lstlisting}
+You are now ready to commit. You can see what is about to be committed using git diff with the --cached option:
+
+\begin{lstlisting}
+> git diff --cached
+\end{lstlisting}
+(Without {\ft --cached}, git diff will show you any changes that you've made but not yet added to the index.) You can also get a brief summary of the situation with git status:
+
+\begin{lstlisting}
+> git status
+# On branch master
+# Changes to be committed:
+#   (use ``git reset HEAD <file>...'' to unstage)
+#
+#modified:   file1
+#modified:   file2
+#modified:   file3
+#
+\end{lstlisting}
+
+If you need to make any further adjustments, do so now, and then add any newly modified content to the index. Finally, commit your changes with:
+
+\begin{lstlisting}
+> git commit
+\end{lstlisting}
+This will again prompt you for a message describing the change, and then record a new version of the project.
+
+Alternatively, instead of running git add beforehand, you can use
+
+\begin{lstlisting}
+> git commit -a
+\end{lstlisting}
+which will automatically notice any modified (but not new) files, add them to the index, and commit, all in one step.
+
+A note on commit messages: Though not required, it's a good idea to begin the commit message with a single short (less than 50 character) line summarizing the change, followed by a blank line and then a more thorough description. The text up to the first blank line in a commit message is treated as the commit title, and that title is used throughout Git. For example, git-format-patch(1) turns a commit into email, and it uses the title on the Subject line and the rest of the commit in the body.
+
+Git tracks content not files
+Many revision control systems provide an add command that tells the system to start tracking changes to a new file. Git's add command does something simpler and more powerful: git add is used both for new and newly modified files, and in both cases it takes a snapshot of the given files and stages that content in the index, ready for inclusion in the next commit.
+
+\subsection{Viewing project history}
+At any point you can view the history of your changes using
+
+\begin{lstlisting}
+> git log
+\end{lstlisting}
+If you also want to see complete diffs at each step, use
+
+\begin{lstlisting}
+> git log -p
+\end{lstlisting}
+
+Often the overview of the change is useful to get a feel of each step
+
+\begin{lstlisting}
+> git log --stat --summary
+\end{lstlisting}
+
+Git is great for collaboration and allows creating and merging branches. When git projects are hosted on cloud services such as GitHub, you can send pull requests to other users which they can accept and reject. For more details consult the official documentation.
+
+\subsection{Review of GIT commands}
+
+\goodbreak\chapter{Python}
+
+\include{python}
+
+\section{Regular Expressions}
+
+The most efficient way of searching for text/patterns in text is by using regular expressions. For example:
+
+\begin{lstlisting}
+import urllib
+import re
+html = urllib.urlopen('http://www.depaul.com')
+regex = re.compile('[\w\.]+@[\w\.]+')
+emails = regex.findall(html)
+print emails
+\end{lstlisting}
+
+{\ft re.compile(...)} compiles the description of a pattern into an object, {\ft regex}. Th {\ft findall} method of the object finds all expressions matching the compiled pattern. Here are useful rules:
+
+\begin{itemize}
+\item {\ft \textasciicircum} means ``beginning of text''.
+\item {\ft \$} means ``and of text of text''.
+\item {\ft .} means any character.
+\item {\ft \verb!\!w} means any alphanumeric character or underscore.
+\item {\ft \verb!\!W} means any character not alphanumeric character and not underscore.
+\item {\ft \verb!\!s} means any form of whitespace (space, tab, etc.).
+\item {\ft \verb!\!S} means any char but not a whitespace.
+\item {\ft [...]} can be used to build an OR sequence of characters.
+\item {\ft (...)} can be used to build a AND sequence of consecutive matching characters.
+\item {\ft (...)*} means any repetition of the sequence {\ft (...)}.
+\item {\ft (...)+} means any non-zero repetition of the sequence {\ft (...)}.
+\end{itemize}
+A slash can be used to escape special characters. In a string {\ft \verb!\!} must be escaped as {\ft \verb!\!\verb!\!}. An actual ``\verb!\!" must therefore be escaped twice {\ft \verb!\!\verb!\!\verb!\!\verb!\!}.
+
+Here are some examples of regular expressions (they are all approximations and oversimplifications):
+
+\begin{itemize}
+\item Match all email in a document
+\begin{lstlisting}
+re.compile("[\w\.]+@[\w\.]").findall(html)
+\end{lstlisting}
+
+\item Match all tags in HTML
+\begin{lstlisting}
+re.compile("\<(\w+)").findall(html)
+\end{lstlisting}
+
+\item Match all images sources in HTML
+\begin{lstlisting}
+re.compile("""\<img [^>]*src=["'](.*)["']""").findall(html.lower())
+\end{lstlisting}
+
+\item Match all links in HTML
+\begin{lstlisting}
+re.compile("""\<a [^>]*href=["'](.*)["']""").findall(html.lower())
+\end{lstlisting}
+
+\end{itemize}
+
+% include http://www.pythonforbeginners.com/systems-programming/python-system-administration/
+
+\goodbreak\chapter{OS funtions from Python}
+
+Get current working directory with os.getcwd()
+
+\begin{lstlisting}
+print os.getcwd()
+\end{lstlisting}
+
+Get the status of a file with os.stat()
+
+\begin{lstlisting}
+print "Getting the status of: ", os.stat('/usr/bin/python')
+\end{lstlisting}
+
+Execute a shell command with os.system()
+
+\begin{lstlisting}
+os.system('ls -l')
+\end{lstlisting}
+
+Return the current process id with os.getpid()
+
+\begin{lstlisting}
+print os.getpid()
+\end{lstlisting}
+
+Change the owner and group id of path to the numeric uid and gid with os.chown()
+
+\begin{lstlisting}
+os.chown(path, uid, gid)
+\end{lstlisting}
+
+Processes in the system run queue averaged over the last 1, 5, and 15 minutes
+
+\begin{lstlisting}
+print os.getloadavg()
+\end{lstlisting}
+
+Check if a path exists with os.path.exists()
+
+\begin{lstlisting}
+if os.path.exists("file.txt"):
+\end{lstlisting}
+
+Create a new directory named 'new\_directory' if it doesn't exist already"
+
+\begin{lstlisting}
+os.path.exists("new_directory") or os.mkdir("new_directory")
+\end{lstlisting}
+
+Check if the path is a directory or a file with os.path.isdir() and os.path.isfile()
+
+\begin{lstlisting}
+path = "/tmp"
+if os.path.isdir(path): print "That's a directory"
+if os.path.isfile(path): print "That's a file"
+\end{lstlisting}
+
+Create a directory with os.mkdir()
+
+\begin{lstlisting}
+print os.mkdir('new_directory', 0666)
+\end{lstlisting}
+
+Recursive create directories with os.makedirs()
+
+\begin{lstlisting}
+os.makedirs('dir_a/dir_b/dir_c')
+\end{lstlisting}
+
+Remove a directory with os.rmdir()
+\begin{lstlisting}
+print os.rmdir('directory')
+\end{lstlisting}
+
+Recursively remove empty directories with os.removedirs()
+
+\begin{lstlisting}
+os.removedirs('dir_a/dir_b/dir_c')
+\end{lstlisting}
+Rename a file with os.rename()
+
+\begin{lstlisting}
+print os.rename('/path/to/old/file', '/path/to/new/file')
+\end{lstlisting}
+
+Rename a file with shutil.move()
+
+\begin{lstlisting}
+print shutil.move('/path/to/old/file', '/path/to/new/file')
+\end{lstlisting}
+
+Rename a file with shutil.copy()
+
+\begin{lstlisting}
+print shutil.copy('/path/to/old/file', '/path/to/new/file')
+\end{lstlisting}
+
+Get the users home directory
+
+\begin{lstlisting}
+print os.path.expanduser('~')
+\end{lstlisting}
+
+Check read permissions with os.access()
+
+\begin{lstlisting}
+path = '/tmp/file.txt'
+print os.access(path, os.R_OK)
+\end{lstlisting}
+
+Get the users environment with os.environmen()
+
+\begin{lstlisting}
+home =  os.environ['HOME']
+print home
+\end{lstlisting}
+
+Move focus to a different directory with os.chdir()
+
+\begin{lstlisting}
+print os.chdir('/tmp')
+\end{lstlisting}
+
+Print out all directories, sub-directories and files with os.walk()
+
+\begin{lstlisting}
+for root, dirs, files in os.walk("/tmp"):
+    print root
+    print dirs
+    print files
+\end{lstlisting}
+
+Get the last time a directory was accessed with os.path.getatime()
+
+\begin{lstlisting}
+os.path.getatime('/tmp')
+\end{lstlisting}
+Get the last time a directory was modified with os.path.getmtime()
+
+\begin{lstlisting}
+os.path.getmtime('/tmp')
+\end{lstlisting}
+Get the user ID with os.getuid()
+\begin{lstlisting}
+if os.getuid() != 0: print "you are not root"
+\end{lstlisting}
+Get the group ID with os.getgid()
+
+\begin{lstlisting}
+print os.getgid()
+\end{lstlisting}
+Return the name of the user logged in with os.getlogin()
+
+\begin{lstlisting}
+print os.getlogin()
+\end{lstlisting}
+Returns a list of all files in a directory with os.listdir()
+
+\begin{lstlisting}
+for filename in os.listdir("/tmp"):
+    print "This is inside /tmp", filename
+\end{lstlisting}
+Get the size of a file with os.path.getsize()
+\begin{lstlisting}
+os.path.getsize("/tmp/file.txt")
+\end{lstlisting}
+Using Python in your daily work is a good way to automate system administration
+tasks, when you feel that your shell scripts are too limited.
+
+\goodbreak\chapter{BeautifulSoup}
+
+Regular expressions are useful and indispensable, yet building the proper expressions to match generic tags, and tag attributes in HTML can be difficult. A better solution is to use a library designed specifically for this. One such library is BeautifulSoup. BeautifulSoup does not completely eliminate the need for regular expressions (in fact is uses regular expressions and you may have to build some to pass to some BeautifulSoup methods).
+
+You can install BeautifulSoup from the Bash shell with
+\begin{lstlisting}
+> sudo easy_install BeautifulSoup
+\end{lstlisting}
+
+From within Python you only need to import one class {\ft BeautifulSoup} which we shall rename {\ft Soup} for brevity:
+
+\begin{lstlisting}
+>>> from BeautifulSoup import BeautifulSoup as Soup
+\end{lstlisting}
+Given any help text, for example:
+\begin{lstlisting}
+>>> html = "<html><p>Para 1<p>Para 2<blockquote>Quote 1<blockquote>Quote 2"
+\end{lstlisting}
+You can use the Soup object to parse it and construct an object representation of the Document Object Model:
+\begin{lstlisting}
+>>> soup = Soup(html)
+\end{lstlisting}
+this object can be serialized back into HTML (although it would not produce the exact same HTML, but an equivalent one):
+\begin{lstlisting}
+>>> print soup.prettify()
+<html>
+  <p>
+   Para 1
+  </p>
+  <p>
+   Para 2
+   <blockquote>
+    Quote 1
+    <blockquote>
+     Quote 2
+    </blockquote>
+   </blockquote>
+  </p>
+ </html>
+\end{lstlisting}
+
+The {\ft soup} object (an instance of BeautifulSoup or BeautifulStoneSoup) is a deeply-nested, well-connected data structure that corresponds to the structure of an XML or HTML document. The parser object contains two other types of objects: Tag objects, which correspond to tags like the <TITLE> tag and the <B> tags; and NavigableString objects, which correspond to strings like ``Page title'' and ``This is paragraph''.
+
+The {\ft soup} object can be used to query the DOM and manipulate it. For example, you can ask for the first {\ft <p/>} tag which has an ``align'' attribute equal to ``center'':
+\begin{lstlisting}
+>>> p = soup.find('p', align='center')
+\end{lstlisting}
+The output {\ft p} object is also a {\ft BeautifulSoup} object. Unless you copy it, any change to this object will also affect the {\ft soup} object that contains it.
+
+Given then {\ft p} object you can retrieve its attributes, for example its {\ft id}, its {\ft class}, its contents, or its serialized content:
+\begin{lstlisting}
+>>> print p['id']
+>>> print p['class']
+>>> print p.contents
+>>> print p.string
+\end{lstlisting}
+Similarly you can search all the tags in the {\ft soup} object which match a given criteria, for example app {\ft <p/>} tags:
+\begin{lstlisting}
+>>> soup.findAll('p')
+\end{lstlisting}
+or all tags with an {\ft id} that matches a regular expression:
+\begin{lstlisting}
+>>> soup.findAll(id=re.compile("^x"))
+\end{lstlisting}
+An alternative syntax for getting all the {\ft <p/>} tags is:
+\begin{lstlisting}
+>>> tags = soup.p
+\end{lstlisting}
+The '.' notation can chained to obtain, for example the title inside the head of the document:
+\begin{lstlisting}
+>>> print soup.head.title
+\end{lstlisting}
+You can also replace its contents with:
+\begin{lstlisting}
+>>> soup.head.title.replaceWith('New Title')
+\end{lstlisting}
+Each {\ft BeautifulSoup} object is a reference to a portion of the {\ft soup} document. Any change will affect the original document.
+
+Notice that any HTML document is a tree, therefore you can traverse the tree by looking for the parent of a given node, its siblings (next and previous), as well as the next and previous tags in the DOM structure:
+\begin{lstlisting}
+>>> print soup.head.parent.name
+>>> print soup.p.nextSibling
+>>> print soup.p.previousSibling
+>>> print soup.p.next
+>>> print soup.p.previous
+\end{lstlisting}
+
+\goodbreak\section{Cached Downloads}
+
+\begin{lstlisting}
+import urllib2
+import shelve
+
+def cached_download(url):
+    d = shelve.open('cached.pages')
+    if url in d:
+        data = d[url]
+    else:
+        try:
+            data = d[url] = urllib2.urlopen(url,timeout=5).read()
+        except:
+            data = None
+    return data
+\end{lstlisting}
+
+\goodbreak\section{A simple web crawler}
+
+\begin{lstlisting}
+# author: Massimo Di Pierro
+# license: BSD
+from BeautifulSoup import BeautifulSoup
+import collections
+import cPickle
+import urllib2
+import shelve
+import socket
+import re
+
+TIMEOUT = 10 #seconds
+EXTENSIONS = ('asp','aspx','php','html','htm')
+regex_remove = re.compile(
+    '\<script.*?\</script\>|\<style.*?\</style\>|\<!--.*?--\>',re.DOTALL)
+regex_words = re.compile('[a-zA-Z\-][a-zA-Z\-]+')
+regex_url = re.compile('(?P<scheme>\w+)\://(?P<host>.*?)(?P<path_info>/.*)')
+
+def cached_download(url):
+    d = shelve.open('cached.pages')
+    try:
+        data = d[url]
+    except KeyError:
+        try:
+            data = d[url] = urllib2.urlopen(url,timeout=TIMEOUT).read()
+        except (socket.gaierror, socket.error, AttributeError, IOError):
+            return None
+    return data
+
+def parse_words(html):
+    body = html.find('body')
+    if not body: return set()
+    texts = body.findAll(text=True)
+    texts = map(lambda e:e.string.strip().lower(),texts)
+    texts = filter(lambda e:e,texts)
+    sets = [set(regex_words.findall(t)) for t in texts]
+    words = reduce(lambda a,b:a|b,sets,set())
+    return words
+
+def normalize_url(new, scheme, host, path_info):
+    new = new.encode('utf8')
+    extension =  new.split('?',1)[0].split('#',1)[0].rsplit('.')[-1].lower()
+    if (new.startswith('mailto:') or new.startswith('#') or
+        (not '/' in extension and not extension in EXTENSIONS) or
+        ('://' in new and not new.split('://')[0] in ('http','https'))):
+        return None
+    elif '://' in new:
+        return new
+    elif new.startswith('//'):
+        return scheme+':'+new
+    elif new.startswith('/'):
+        return '%s://%s%s' % (scheme, host, new)
+    else:
+        relative = path_info.rsplit('/',1)[0]
+        while new.startswith('../'):
+            relative, new = relative.rsplit('/',1)[0], new[3:]
+    return '%s://%s%s/%s' % (scheme, host, relative, new)
+
+def find_links(html, url = 'http://cdm.depaul.edu/', pattern=re.compile('.*')):
+    match = regex_url.match(url)
+    (scheme, host, path_info) = match.groups()
+    start = '/'.join(url.split('/')[:3])
+    links = html.findAll('a')
+    links = map(lambda link:link.get('href'),links)
+    links = filter(lambda e:e,links)
+    links = map(lambda link:normalize_url(link,scheme,host,path_info),links)
+    follow_links = set(filter(lambda e:e and pattern.match(e),links))
+    ignore_links = set(filter(lambda e:e and e not in follow_links,links))
+    return follow_links, ignore_links
+
+def crawl(urls = ['http://web2py.com/'], pattern = None,
+          max_links=200, filename='maps.pickle', mode='ignore-check'):
+    if isinstance(urls,str): urls = [urls]
+    maps = collections.defaultdict(set)
+    discovered = set(urls)
+    ignored = set()
+    queue = [url for url in urls]
+    n = 0
+    if pattern is None:
+        pattern = '^'+'|'.join(re.escape(url) for url in urls)
+    if isinstance(pattern,str):
+        pattern = re.compile(pattern)
+    while queue and (max_links is None or n<max_links):
+        url = queue.pop()
+        print '%s: RETRIEVING %s' % (n, url)
+        data =  cached_download(url)
+        if data is None:
+            print '%s: INVALID %s' % (n, url)
+            continue
+        html = BeautifulSoup(data)
+        follow_links, ignore_links = find_links(html,url,pattern)
+        words = parse_words(html)
+        for word in words:
+            maps[word].add(url)
+        if mode == 'ignore-log':
+            for url in ignore_links - ignored:
+                print 'IGNORING %s' % url
+            ignored |= ignore_links
+        elif mode == 'ignore-check':
+            for url in ignore_links - ignored:
+                if cached_download(url) is None:
+                    print '%s: IGNORING BROKEN %s' % (n, url)
+                else:
+                    print '%s: IGNORING %s' % (n, url)
+            ignored |= ignore_links
+        for url in follow_links:
+            if url and not url in discovered:
+                queue.append(url)
+                discovered.add(url)
+        print '%s: PROGRESS #urls:%s #words:%s' % (n,len(discovered),len(maps))
+        n += 1
+    cPickle.dump(maps,open(filename,'w'))
+
+def search(words, filename='maps.pickle'):
+    words = filter(lambda w:len(w)>2,words.lower().split())
+    maps = cPickle.load(open(filename))
+    return reduce(lambda a,b:a&b,[maps[word] for word in words])
+
+if __name__=='__main__':
+    print crawl('http://depaul.edu/',pattern='^http\://[\w\.]*depaul\.edu(.*)',
+                max_links=None)
+    print search('Python programming')
+
+\end{lstlisting}
+
+
+\goodbreak\chapter{Mechanize}
+
+You can install Mechanize from the Bash shell with
+\begin{lstlisting}
+> sudo easy_install mechanize
+\end{lstlisting}
+
+Mechanize simulates a web browser and its interaction with the web. You can start it with:
+\begin{lstlisting}
+>>> import mechanize
+>>> br = mechanize.Browser()
+\end{lstlisting}
+
+It is important to configure your browser so that it can fool third party web servers. Web servers set restriction and who can access web pages and in particular they do not like to be visited by robots. You have to pretend your browser is a ``normal'' one, for example Firefox:
+\begin{lstlisting}
+>>> br.set_handle_robots( False )
+>>> br.addheaders = [('User-agent', 'Firefox')]
+\end{lstlisting}
+Once you have a browser {\ft br} you can give instructions to it, for example, ``visit the Google web page'':
+\begin{lstlisting}
+>>> response = br.open("http://www.google.com/")
+\end{lstlisting}
+The response has attributes for example:
+\begin{lstlisting}
+>>> print response.geturl()
+http://www.google.com/
+\end{lstlisting}
+or the returned status code:
+\begin{lstlisting}
+>>> print response.code
+200
+\end{lstlisting}
+or the response headers
+\begin{lstlisting}
+>>> print response.info().headers
+['Date: Wed, 11 Sep 2013 18:09:10 GMT\r\n', 'Expires: -1\r\n', 'Cache-Control: private, max-age=0\r\n', 'Content-Type: text/html; charset=ISO-8859-1\r\n', 'Set-Cookie: PREF=ID=a53b86f876c89fc9:U=548b6d330fff7040:FF=0:TM=1378922843:LM=1378922950:S=xPNYhTPc_HwsBqd8; expires=Fri, 11-Sep-2015 18:09:10 GMT; path=/; domain=.google.com\r\n', 'Server: gws\r\n', 'X-XSS-Protection: 1; mode=block\r\n', 'X-Frame-Options: SAMEORIGIN\r\n', 'Alternate-Protocol: 80:quic\r\n', 'Connection: close\r\n']
+\end{lstlisting}
+Or a specific header:
+\begin{lstlisting}
+>>> response.info().getheader('date')
+'Wed, 11 Sep 2013 18:09:10 GMT'
+\end{lstlisting}
+Or the page content (HTML or binary depending on the data):
+\begin{lstlisting}
+>>> print response.read()
+\end{lstlisting}
+What is most important is the ability of Mechanize to understand the page. You can ask it for example to follow a link and get another page. For example, follow a link that contains text matching a regular expressions:
+\begin{lstlisting}
+>>> response = br.follow_link(text_regex=".*Google.*")
+\end{lstlisting}
+You can ask if the action was successful and the browser received HTML:
+\begin{lstlisting}
+>>> assert br.viewing_html()
+\end{lstlisting}
+Because of Mechanize ability to understand HTML, you can ask it to locate all links in a page:
+\begin{lstlisting}
+>>> for f in br.links(): print f
+...
+Link(base_url='http://www.google.com/', url='http://www.google.com/intl/en/options/', text='More &#9660;', tag='a', attrs=[('class', 'gb3'), ('href', 'http://www.google.com/intl/en/options/'), ('onclick', 'this.blur();gbar.tg(event);return !1'), ('aria-haspopup', 'true')])
+...
+\end{lstlisting}
+And/or all forms in the page:
+\begin{lstlisting}
+>>> for f in br.forms(): print f
+<f GET http://www.google.ca/search application/x-www-form-urlencoded
+  <HiddenControl(ie=ISO-8859-1) (readonly)>
+  <HiddenControl(hl=en) (readonly)>
+  <HiddenControl(source=hp) (readonly)>
+  <TextControl(q=)>
+  <SubmitControl(btnG=Google Search) (readonly)>
+  <SubmitControl(btnI=I'm Feeling Lucky) (readonly)>
+  <HiddenControl(gbv=1) (readonly)>>
+\end{lstlisting}
+This says: There is only one form on the page/ Hidden field id's are ie (page encoding), hl (language code), hp (? don't know), and gbv (also don't know). The only not-hidden field id is q, which is a text input, which is the search text.
+
+And you can ask it to select a form, fill it, and submit it:
+\begin{lstlisting}
+>>> formnames = [f.name for f in br.forms()]
+>>> br.select_form(formnames[0])
+\end{lstlisting}
+or
+\begin{lstlisting}
+>>> br.select_form(nr=0)
+>>> br.form[ 'q' ] = 'foo'
+>>> br.submit()
+>>> response = br.response()
+\end{lstlisting}
+
+\goodbreak\chapter{Fabric}
+
+Fabric is a remote management tool written in Python.
+
+You can install Fabric from the Bash shell with
+\begin{lstlisting}
+> sudo easy_install fabric
+\end{lstlisting}
+
+To use Fabric you create a fabfile (just a Python program) which defines the operations you want to perform for example:
+
+\begin{lstlisting}
+from fabric.api import local
+
+def dir():
+  local('ls -l')
+\end{lstlisting}
+
+than you run it with:
+
+\begin{lstlisting}
+fab -f /path/to/fabfile.py dir
+\end{lstlisting}
+
+This calls the uptime function inside the "fabfile.py". From now on we will assume the "fabfile.py" in the user root folder and will omit the {\ft -f} command line option.
+
+The {\ft local(...)} function executes the shell command passed as argument. In this case the {\ft ls -l} command. The command in the example is executed on the local machine but the point of Fabric is to execute the command remotely and simultaneously on one or more machines. Here is a better example
+
+\begin{lstlisting}
+from fabric.api import env, run
+
+env.hosts = [ '192.168.1.100', '192.168.1.101', '192.168.1.102' ]
+env.user = "you"
+env.password = "mysecret"
+env.parallel = True
+
+def dir():
+    run('ls -l')
+\end{lstlisting}
+
+Now a call to
+\begin{lstlisting}
+fab dir
+\end{lstlisting}
+
+will produce a directory listing from all the machines at the hosts defined in {\ft env.hosts}.  One can also specify a host using the {\ft -H} command line option:
+
+\begin{lstlisting}
+fab -H 192.168.1.100 dir
+\end{lstlisting}
+
+You can use {\ft -h} to find out more about command line options:
+
+\begin{lstlisting}
+Usage: fab [options] <command>[:arg1,arg2=val2,host=foo,hosts='h1;h2',...] ...
+
+Options:
+  -h, --help            show this help message and exit
+  -d NAME, --display=NAME
+                        print detailed info about command NAME
+  -F FORMAT, --list-format=FORMAT
+                        formats --list, choices: short, normal, nested
+  -l, --list            print list of possible commands and exit
+  --set=KEY=VALUE,...   comma separated KEY=VALUE pairs to set Fab env vars
+  --shortlist           alias for -F short --list
+  -V, --version         show program's version number and exit
+  -a, --no_agent        don't use the running SSH agent
+  -A, --forward-agent   forward local agent to remote end
+  --abort-on-prompts    abort instead of prompting (for password, host, etc)
+  -c PATH, --config=PATH
+                        specify location of config file to use
+  -D, --disable-known-hosts
+                        do not load user known_hosts file
+  -f PATH, --fabfile=PATH
+                        python module file to import, e.g. '../other.py'
+  --hide=LEVELS         comma-separated list of output levels to hide
+  -H HOSTS, --hosts=HOSTS
+                        comma-separated list of hosts to operate on
+  -i PATH               path to SSH private key file. May be repeated.
+  -k, --no-keys         don't load private key files from ~/.ssh/
+  --keepalive=N         enables a keepalive every N seconds
+  --linewise            print line-by-line instead of byte-by-byte
+  -n M, --connection-attempts=M
+                        make M attempts to connect before giving up
+  --no-pty              do not use pseudo-terminal in run/sudo
+  -p PASSWORD, --password=PASSWORD
+                        password for use with authentication and/or sudo
+  -P, --parallel        default to parallel execution method
+  --port=PORT           SSH connection port
+  -r, --reject-unknown-hosts
+                        reject unknown hosts
+  -R ROLES, --roles=ROLES
+                        comma-separated list of roles to operate on
+  -s SHELL, --shell=SHELL
+                        specify a new shell, defaults to '/bin/bash -l -c'
+  --show=LEVELS         comma-separated list of output levels to show
+  --skip-bad-hosts      skip over hosts that can't be reached
+  --ssh-config-path=PATH
+                        Path to SSH config file
+  -t N, --timeout=N     set connection timeout to N seconds
+  -u USER, --user=USER  username to use when connecting to remote hosts
+  -w, --warn-only       warn, instead of abort, when commands fail
+  -x HOSTS, --exclude-hosts=HOSTS
+                        comma-separated list of hosts to exclude
+  -z INT, --pool-size=INT
+                        number of concurrent processes to use in parallel mode
+\end{lstlisting}
+
+You can also declare and call functions which take arguments. For example here is a fabfile that allows you to apt-get install packages remotely:
+
+\begin{lstlisting}
+from fabric.api import env, sudo
+
+env.hosts = [ '192.168.1.100', '192.168.1.101', '192.168.1.102' ]
+env.user = "you"
+env.password = "mysecret"
+env.parallel = True
+
+def install(package):
+   sudo('apt-get -y install %s' % package)
+\end{lstlisting}
+
+and you can run it with:
+
+\begin{lstlisting}
+fab install:python
+\end{lstlisting}
+
+A nice feature of Fabric is the ability to transfer files between the local and the remote host. Here is an example to copy a local file and unzip it at each at the remote destinations:
+
+\begin{lstlisting}
+from fabric.api import env, sudo
+from fabric.operations import put
+
+env.hosts = [ '192.168.1.100', '192.168.1.101', '192.168.1.102' ]
+env.user = 'you'
+env.password = 'ysecret'
+env.parallel = True
+
+def deploy(filename):
+    put(filename, '/home/you/destination/path')
+    run('unzip /home/you/destination/path/%s' % filename)
+\end{lstlisting}
+
+which you can use with
+
+\begin{lstlisting}
+> fab deploy:myfile.zip
+\end{lstlisting}
+
+If you need to change folders:
+
+\begin{lstlisting}
+from __future__ import with_statement
+from fabric.api import run
+
+dir = '/path/to/mydir/
+
+with cd(dir):
+    run('ls -l')
+\end{lstlisting}
+
+Fabric can handle errors:
+\begin{lstlisting}
+from __future__ import with_statement
+from fabric.api import local, settings, abort
+from fabric.contrib.console import confirm
+
+def test():
+    with settings(warn_only=True):
+        result = local('./manage.py test my_app', capture=True)
+    if result.failed and not confirm(``Tests failed. Continue anyway?''):
+        abort(``Aborting at user request.'')
+\end{lstlisting}
+
+\goodbreak\chapter{User Management}
+
+To create a new user:
+
+\begin{lstlisting}
+>>> import os
+>>> import crypt
+>>> password = 'testpassword'
+>>> username = 'someuser'
+>>> encrypted_password = crypt.crypt(password,'22')
+>>> os.system('useradd -m -p %s %s' % (encrypted_password, username))
+\end{lstlisting}
+(the {\ft -m} option creates the home user if does not exist).
+
+To give superuser permissions to the new user use shell command {\ft visudo} to edit {\ft /etc/sudoers} file:
+\begin{lstlisting}
+> export VISUAL=nano; visudo
+> visudo
+# users network=(group) commands
+
+# joe mike and jude can run any command (ALL) from (ALL) terminals
+joe, mike, jude ALL=ALL
+
+# tim and ales can run any command from any terminal as memerbs of the www-data group
+tim, alex ALL=(www-data) ALL
+
+# jack can can run any command from any group from any machine in 10.1.2.0/255.255.255.0
+jack 10.1.2.0/255.255.255.0=(ALL) ALL
+
+# caty can print from any machine
+cathy ALL=/usr/sbin/lpc, /usr/bin/lprm
+
+# john can do everything and is not even prompted a password!
+john ALL=(ALL) NOPASSWD: ALL
+\end{lstlisting}
+
+To automate remote tasks we want to be able to login into a remote host wihtout being prompted a password.
+We can achieve this by creating a secrtificate for the client machine.
+On the client machine:
+
+\begin{lstlisting}
+> mkdir ~/.ssh
+> chmod 700 ~/.ssh
+> ssh-keygen -t rsa -b 4096
+\end{lstlisting}
+it will produce the following and as some questions, you can just press enter:
+\begin{lstlisting}
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/username/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/username/.ssh/id_rsa.
+Your public key has been saved in /home/username/.ssh/id_rsa.pub.
+\end{lstlisting}
+Then use the following command
+\begin{lstlisting}
+> ssh-copy-id <username>@<host>
+\end{lstlisting}
+which will automatically ssh into <username>@<host> and appends the local \verb!~/.ssh/id_rsa.pub! to the remote \verb!~/.ssh/authorized_keys!.
+
+Troubleshooting. You may need to set permission on the remote host:
+\begin{lstlisting}
+> chmod go-w ~/
+> chmod 700 ~/.ssh
+> chmod 600 ~/.ssh/authorized_keys
+\end{lstlisting}
+
+You may need to tell remote host to add the key:
+\begin{lstlisting}
+> ssh-add
+\end{lstlisting}
+
+Now you can:
+\begin{lstlisting}
+> ssh <username>@<host>
+\end{lstlisting}
+
+Always no the remote host, makes sure the file {\ft /etc/ssh/sshd\_config} contains:
+\begin{lstlisting}
+PubkeyAuthentication yes
+RSAAuthentication yes
+\end{lstlisting}
+
+You may need to restart the deamon. On the host:
+\begin{lstlisting}
+sudo /etc/init.d/sshd restart
+\end{lstlisting}
+
+\goodbreak\chapter{EC2 and OpenStack}
+
+A virtual machine (VM) is a software implementation of a machine (i.e. a computer) that executes programs like a physical machine. Virtual machines are separated into two major classifications, based on their use and degree of correspondence to any real machine:
+
+A system virtual machine provides a complete system platform which supports the execution of a complete operating system (OS).These usually emulate an existing architecture, and are built with the purpose of either providing a platform to run programs where the real hardware is not available for use (for example, executing software on otherwise obsolete platforms), or of having multiple instances of virtual machines leading to more efficient use of computing resources, both in terms of energy consumption and cost effectiveness (known as hardware virtualization, the key to a cloud computing environment), or both.
+
+A process virtual machine (also, language virtual machine) is designed to run a single program, which means that it supports a single process. Such virtual machines are usually closely suited to one or more programming languages and built with the purpose of providing program portability and flexibility (amongst other things). An essential characteristic of a virtual machine is that the software running inside is limited to the resources and abstractions provided by the virtual machine—it cannot break out of its virtual environment.
+
+Multiple VMs each running their own operating system (called guest operating system) are frequently used in server consolidation, where different services that used to run on individual machines to avoid interference are instead run in separate VMs on the same physical machine.
+
+Software to run virtual machines include VMWare, VirtualBox, and KVM, and XEN.
+
+There are many web services that allows customers to rent computers on which to run their own computer applications.
+The biggest is probably Amazon EC2.
+
+\section{EC2 Commad Line API Tools}
+
+Display all available ec2 images
+\begin{verbatim}
+ec2-describe-images -x all
+\end{verbatim}
+Generate a keypair which will be instead of a root password
+\begin{verbatim}
+ec2-create-keypair mb-keypair
+\end{verbatim}
+Start running a EC2 Instance, this is when billing starts
+\begin{verbatim}
+ec2-run-instances ami-a9fe1bc0 -k mbkeypair
+\end{verbatim}
+Open up the port 22 for ssh, similary 80 for port 80
+\begin{verbatim}
+ec2-authorize default -p 22
+\end{verbatim}
+Display list of ec2 instances running
+\begin{verbatim}
+ec2-describe-instances
+\end{verbatim}
+Terminate an ec2 running instances. This is where billing ends
+\begin{verbatim}
+ec2-terminate-instances ami-a9fe1bc0
+\end{verbatim}
+
+OpenStack is a free and open software for creating a cloud infrasture like amazon EC2.
+The technology consists of a series of interrelated projects that control pools of processing, storage, and networking resources throughout a datacenter, all managed through a dashboard that gives administrators control while empowering its users to provision resources through a web interface.
+
+Nova is a controller for cloud computing platforms, supports OpenStack and EC2.
+
+\begin{verbatim}
+>>> from novaclient import OpenStack
+>>> nova = OpenStack(USERNAME, PASSWORD, AUTH_URL)
+>>> nova.servers.list()
+[<Server: buildslave-ubuntu-9.10>]
+
+>>> nova.flavors.list()
+[<Flavor: 256 server>,
+ <Flavor: 512 server>,
+ <Flavor: 1GB server>,
+ <Flavor: 2GB server>,
+ <Flavor: 4GB server>,
+ <Flavor: 8GB server>,
+ <Flavor: 15.5GB server>]
+>>> fl = nova.flavors.find(ram=512)
+>>> nova.servers.create("my-server", flavor=fl)
+<Server: my-server>
+\end{verbatim}
+
+For more info:
+\url{https://github.com/openstack/python-novaclient}
+
+Boto is another python library to manage virtualization. Whle Nova is designed for OpenStack and supports EC2 via a compatibility layer, Boto is designed for EC2 and supports OpenStack via a compatibility layer.
+
+Both Nova and Boto can run from command line:
+
+\begin{verbatim}
+> nova boot myUbuntuServer --image "3afe97b2-26dc-49c5-a2cc-a2fc8d80c001" --flavor 6
+\end{verbatim}
+
+\end{fullwidth}
+\backmatter
+
+\printindex
+
+\begin{thebibliography}{999}
+\bibitem{python} \url{http://www.python.org}
+\bibitem{unicode} \url{http://farmdev.com/talks/unicode/}
+\bibitem{soup} \url{http://www.crummy.com/software/BeautifulSoup/}
+\bibitem{mechanize} \url{http://wwwsearch.sourceforge.net/mechanize/}
+\bibitem{fabric} \url{http://docs.fabfile.org/en/1.8/}
+\bibitem{ssh-key} \url{https://help.ubuntu.com/community/SSH/OpenSSH/Keys}
+\bibitem{sudo} \url{http://www.garron.me/en/linux/visudo-command-sudoers-file-sudo-default-editor.html}
+\end{thebibliography}
+
+\end{document}
+
