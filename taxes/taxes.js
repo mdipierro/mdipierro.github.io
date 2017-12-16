@@ -10,15 +10,15 @@ var data = {
      delta: 0
 };
 var rates = {
-    "old": {
-        "1":[[9325, 10],
+    "old": { // current 2017 tax rates
+        "1":[[9325, 10], // 10% up to 9325 for single
              [37950, 15],
              [91900, 25],
              [191650, 28],
              [416700, 33],
              [418400, 35],
              [null, 39.6]],
-        "2":[[18650, 10],
+        "2":[[18650, 10], // 10% up to 18650 for filing jointly
              [75900, 15],
              [153100, 25],
              [233350, 28],
@@ -26,7 +26,7 @@ var rates = {
              [470700, 35],
              [null, 39.6]]
     },
-    "new": {
+    "new": { // new proposed GOP tax rates
         "1":[[9525, 10],
              [38700, 12],
              [82500, 22],
@@ -66,21 +66,27 @@ var methods = {
         var self_amount = parseInt(vue.self_amount || 0);
         var dependants = parseFloat(vue.dependants || 0);
         if(!vue.married) {
-            amt = gross - (6300 + 
-                           gross * state_tax_rate/100 +
-                           re_taxes + 
-                           dependants * 4050 * ((gross<=155650)?1:0));            
+            // if single filer
+            // compute old tax
+            amt = gross - (6300 +  // standard deductions
+                           gross * state_tax_rate/100 + // state taxes
+                           re_taxes +  // real estate taxes
+                           dependants * 4050 * ((gross<=155650)?1:0)); // dependants
             old_tax = compute_tax(amt, rates["old"]['1']);
-            amt = gross - (12000 + 
-                           0.20 * Math.min(self_amount, Math.max(gross-315000,0)) +
-                           dependants * 4050 * ((gross<=155650)?1:0));            
+            // compute new tax
+            amt = gross - (12000 + // new standard deductions
+                           0.20 * Math.min(self_amount, Math.max(gross-315000,0)) + // self emplyment discount
+                           dependants * 4050 * ((gross<=155650)?1:0)); // assuming this no change
             new_tax = compute_tax(amt,rates["new"]['1']);            
         } else {
+            // if filing jointly
+            // compute old tax
             amt = gross - (12600 + 
                            gross * state_tax_rate/100 +
                            re_taxes + 
                            dependants * 4050 * ((gross<=155650)?1:0));            
             old_tax = compute_tax(amt, rates["old"]['2']);
+            // compute new tax
             amt = gross - (24000 +
                            0.20*Math.min(self_amount, Math.max(gross-315000,0)) +
                            dependants * 4050 * ((gross<=155650)?1:0));            
