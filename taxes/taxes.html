@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <link href="https://mdipierro.github.io/stupid.css/stupid.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="target">
+      <div class="container max900 center">
+        <div class="padded spaced">
+          <h2>How will the GOP tax plan affect you?</h2>
+          <h3>here is an estimate</h3>
+          <table>
+          <tr>
+            <td><label>Married filing jointly</label></td>
+            <td><input type="checkbox" v-model="married" v-on:change="compute"></td>
+          </tr>
+          <tr>
+            <td><label>Gross Income (add all sources)</label></td>
+            <td><input type="number" placeholder="gross income" v-model="gross"  v-on:keyup="compute"></td>
+          </tr>
+          <tr>        
+            <td><label>Amount of income caming from self employment (C corp, S corp, LLC)</label></td>
+            <td><input type="number" placeholder="amount from self employment" v-model="self_amount" v-on:keyup="compute"></td>
+          </tr>
+          <tr>
+            <td><label>Number of claimed dependants (not incuding yourself and wife)</label></td>
+            <td><input type="number" placeholder="number of claimed dependants" v-model="dependants" v-on:keyup="compute"></td>
+          </tr>
+          <tr>
+            <td><label>You state tax rate</label>
+            <td><input type="number" placeholder="state tax rate" v-model="state_tax_rate" v-on:keyup="compute">
+          </tr>
+          <tr>
+            <td><label>Your typical yearly real estate taxes</label></td>
+            <td><input type="number" placeholder="yearly real estate taxes" v-model="re_taxes" v-on:keyup="compute"></td>
+          </tr>
+          </table>
+          <div clss="padded">
+            <div v-if="delta<0" class="padded rounded green center">
+              We expect you to save ${{-delta}} in taxes
+            </div>
+            <div v-else  class="padded rounded green center">
+              We expect you to pay ${{delta}} extra in taxes
+            </div>
+          </div>          
+          <div class="padded rounded silver spaced">
+            <p>
+              DISCLAMER: This calculator is based on the limited tax information available as of Dec 15, 2017. It also makes simplified assumption about how taxes are calculated for most people. These assumptions are most certainly wrong but should give the bulk of the effect of the changes in the taxes according to the GOP tax plan. We include effects in the changes of tax rates, standard deduction, state tax deduction, real estate tax deduciton, and new 20% deduction for self employment (when total income exceeds $315,000). We did not include the changes in itemized deductions. This calculator is not intended to make any statement about fairness of the plan and does not include any extra costs or savings you may incur as indirect consequences of the tax plan. Feel free to check the code in taxes.js and send me a patch if you can make it more precise without asking too many questions.</p>
+            <p class="right">Code created by Prof. <a href="mailto:massimo.dipierro@gmail.com">Massimo Di Pierro</a> (<a href="http://cdm.depaul.edu">DePaul University</a>)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.11/vue.min.js"></script>
+  <script src="taxes.js"></script>
+</html>
