@@ -60,11 +60,11 @@ var compute_tax = function(amt, rate) {
 var methods = {
     compute: function() {
         var amt, new_tax, old_tax;
-        var gross = parseInt(vue.gross);
-        var state_tax_rate = parseFloat(vue.state_tax_rate);
-        var re_taxes = parseInt(vue.re_taxes);
-        var self_amount = parseInt(vue.self_amount);
-        var dependants = parseFloat(vue.dependants);
+        var gross = parseInt(vue.gross || 0);
+        var state_tax_rate = parseFloat(vue.state_tax_rate || 0);
+        var re_taxes = parseInt(vue.re_taxes || 0);
+        var self_amount = parseInt(vue.self_amount || 0);
+        var dependants = parseFloat(vue.dependants || 0);
         if(!vue.married) {
             amt = gross - (6300 + 
                            gross * state_tax_rate/100 +
@@ -80,7 +80,6 @@ var methods = {
                            gross * state_tax_rate/100 +
                            re_taxes + 
                            dependants * 4050 * ((gross<=155650)?1:0));            
-            console.log(amt);
             old_tax = compute_tax(amt, rates["old"]['2']);
             amt = gross - (24000 +
                            0.20*Math.min(self_amount, Math.max(gross-315000,0)) +
