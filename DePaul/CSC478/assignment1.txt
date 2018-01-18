@@ -15,7 +15,7 @@ Write an iPython notebook that performs the following operation:
 - remove all rows that have invalid numbers and/or impute missing numbers
 - normalize each column to have mean 0 and standard deviation 1
 - split the dataset in two parts [:n] for training and [n:] for testing (n = 50%)
-- run KNeighborsRegressor fit/predict
+- run KNeighborsClassifier fit/predict
 - provide the following output in tabular format:
   % predicted correctly
   % of true positives
