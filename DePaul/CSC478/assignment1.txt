@@ -1,0 +1,33 @@
+## CSC478 - Winter 2018 - Assignment 1 - Due Jan 26
+
+Download the file assignment1.csv
+
+The file contains 1000 rows, 5 features, and a boolean column y. 
+Some features may be invalid (not a number, too large, too small). This is intentional.
+Your goal is to predict y using different techniques.
+
+Write an iPython notebook that performs the following operation:
+- plots the distribution of each column and look for outliers
+- for each feature column compute mean and standard deviation
+- for each couple of features compute the correlation and make a table of correlations
+- answer question: is correalation large or small?
+- answer question: does small correlation imply they are independent?
+- remove all rows that have invalid numbers and/or impute missing numbers
+- normalize each column to have mean 0 and standard deviation 1
+- split the dataset in two parts [:n] for training and [n:] for testing (n = 50%)
+- run KNeighborsRegressor fit/predict
+- provide the following output in tabular format:
+  % predicted correctly
+  % of true positives
+  % of true negatives
+  % of false positives
+  % of false nagatives
+  % f1 score
+- compute the same results using LogisticRegression
+- compute the same results using LogisticRegression without removing the outliers.
+- Answer question: are results better after removing outliers? why?
+
+Important:
+
+All your files should be named "{student_id}-{student-name}-{assignment-number}".
+Upload them using D2L. Zip together your notebook along with the notebook converted to PDF
