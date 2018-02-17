@@ -1,6 +1,6 @@
 # Assignment 4
 
-Due date: Feb 29, 2018
+Due date: Feb 28, 2018
 
 Consider the file:
 
