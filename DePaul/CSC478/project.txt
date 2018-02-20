@@ -6,7 +6,7 @@ Consider the dataset in
 
 In particular extract days.csv from the zip file.
 
-Consider explusively the following columns: [season, yr, mnth, hr, workingday, weathersit, atemp, hum, windspeed, cnt].
+Consider exclusively the following columns: [season, yr, mnth, hr, workingday, weathersit, atemp, hum, windspeed, cnt].
 
 Compute the following:
 
@@ -18,10 +18,10 @@ Compute the following:
 - build a pipeline that includes an imputer and a standard scaler
 - predict the cnt using linear regression
 - discuss which parameters influence the prediciton the most
-- predict whether it is a raining day (weathersit) or not from the non weather columns.
-- predict whether it is a working day or not from the other columns.
-- for each prediction above use the appropriate metric and discuss your result
-- use all columns but the weather columns, apply the standard scaler, and run the kmeans algorithm (with k=2) to divide the points in two groups. How well your two clusters overlap with rainy/non-rainy days? What metric would you use to determine that? Discuss your results.
+- predict whether it is a raining day (weathersit) or not from the non weather columns
+- predict whether it is a working day or not from the other columns
+- for each prediction above, use the appropriate metric and discuss your result
+- use all columns but the weather columns, apply the standard scaler, and run the kmeans algorithm (with k=2) to divide the points in two groups. How well do your two clusters overlap with rainy/non-rainy days? What metric would you use to determine that? Discuss your results
 
 Deliver your result in the form of a PDF document with text and inline plots. 
 Place code and tables in the appendix.
