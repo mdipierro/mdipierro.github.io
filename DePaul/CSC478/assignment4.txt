@@ -11,7 +11,7 @@ It contains a subset of the jobs from Monster.com and listed here: https://www.k
 The dataset contains job titles and corresponding salary information. The job title is a string and the salary is a single floating point number.
 
 Use the first 1200 rows in the dataset as training set and the others as testing set.
-- From the training set extract the vacobulary (list of words that appear in the job titles)
+- From the training set extract the vocabulary (list of words that appear in the job titles)
 - What is the total number of distinct words?
 - Compute the inverse document frequency of each world in the vocabulary as done in class.
 - Show the top 10 and the bottom 10 words only.
@@ -19,6 +19,6 @@ Use the first 1200 rows in the dataset as training set and the others as testing
 - Associate to each job 50 features corresponding to the tf-idf metric of those 50 words.
 - Using those features, run the linear regression and try predict the salary of the rows in the testing set. Notice the vocabulary and the idf are always computed on the training set exclusively. The df are computed on the each row (whether training ot testing set).
 - What is the RMSE?
-- Which words are associated to the higherst salaries?
+- Which words are associated to the highest salaries?
 - Which words are associated to the lowest salaries?
 (minor deviations from the specs are allowed as long as documented and justified)
