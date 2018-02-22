@@ -17,7 +17,7 @@ Use the first 1200 rows in the dataset as training set and the others as testing
 - Show the top 10 and the bottom 10 words only.
 - Select the 50 words with the highest idf (highest inverse frequency).
 - Associate to each job 50 features corresponding to the tf-idf metric of those 50 words.
-- Using those features, run the linear regression and try predict the salary of the rows in the testing set. Notice the vocabulary and the idf are always computed on the training set exclusively. The df are computed on the each row (whether training ot testing set).
+- Using those features, run the linear regression and try predict the salary of the rows in the testing set. Notice the vocabulary and the idf are always computed on the training set exclusively. The tf are computed on the each row (whether training ot testing set).
 - What is the RMSE?
 - Which words are associated to the highest salaries?
 - Which words are associated to the lowest salaries?

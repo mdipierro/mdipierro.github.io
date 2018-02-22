@@ -4,7 +4,7 @@ Consider the dataset in
 
     https://archive.ics.uci.edu/ml/datasets/bike+sharing+dataset
 
-In particular extract days.csv from the zip file.
+In particular extract hours.csv from the zip file.
 
 Consider exclusively the following columns: [season, yr, mnth, hr, workingday, weathersit, atemp, hum, windspeed, cnt].
 
