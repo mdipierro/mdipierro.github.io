@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Massimo Di Pierro — Professor of Computer Science, creator of web2py and py4web.">
+    <meta name="author" content="Massimo Di Pierro">
+    <title>Massimo Di Pierro</title>
+    <style>
+      :root {
+        --bg: #0f1115;
+        --card: #1a1d24;
+        --card-hover: #232733;
+        --fg: #e8eaed;
+        --muted: #9aa0aa;
+        --accent: #4f9cf9;
+        --border: #2a2e38;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background: var(--bg);
+        color: var(--fg);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 4rem 1.5rem 3rem;
+      }
+      header { text-align: center; margin-bottom: 2.5rem; }
+      h1 { font-size: 2.4rem; margin: 0 0 0.3rem; letter-spacing: -0.5px; }
+      .title { color: var(--accent); font-size: 1.05rem; font-weight: 600; margin: 0; }
+      .bio {
+        color: var(--muted);
+        font-size: 1.02rem;
+        max-width: 620px;
+        margin: 1.2rem auto 0;
+        text-align: center;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 2.5rem;
+      }
+      a.card {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        padding: 1rem 1.1rem;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        text-decoration: none;
+        color: var(--fg);
+        transition: background .15s ease, transform .15s ease, border-color .15s ease;
+      }
+      a.card:hover {
+        background: var(--card-hover);
+        border-color: var(--accent);
+        transform: translateY(-2px);
+      }
+      .card .logo {
+        flex: 0 0 40px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        border-radius: 9px;
+        overflow: hidden;
+      }
+      .card .logo img { width: 28px; height: 28px; display: block; }
+      .card .logo svg { width: 26px; height: 26px; }
+      .card .txt { display: flex; flex-direction: column; min-width: 0; }
+      .card .name { font-weight: 600; font-size: 1rem; }
+      .card .sub { color: var(--muted); font-size: 0.82rem; }
+      footer {
+        text-align: center;
+        margin-top: 3rem;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+      footer a { color: var(--accent); text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>Massimo Di Pierro</h1>
+        <p class="title">Scientist, Engineer, Teacher</p>
+        <p class="bio">
+          Ph.D. in High Energy Physics and former lead of simulations at SpaceX.
+          Professor of Computer Science at DePaul University, UC Santa Cruz, and
+          Chapman University, and Director of the Master of Science in Computational
+          Finance. Creator of <strong>web2py</strong> and <strong>py4web</strong>, with
+          expertise in numerical algorithms, parallel computing, and their applications
+          in science and finance. Member of the Python Software Foundation and author of
+          numerous scientific publications and books.
+        </p>
+      </header>
+
+      <div class="grid">
+        <a class="card" href="https://py4web.com/" target="_blank" rel="noopener">
+          <span class="logo"><img src="https://www.google.com/s2/favicons?domain=py4web.com&sz=64" alt="py4web logo"></span>
+          <span class="txt"><span class="name">py4web</span><span class="sub">Modern Python web framework</span></span>
+        </a>
+
+        <a class="card" href="https://web2py.com/" target="_blank" rel="noopener">
+          <span class="logo"><img src="https://www.google.com/s2/favicons?domain=web2py.com&sz=64" alt="web2py logo"></span>
+          <span class="txt"><span class="name">web2py</span><span class="sub">Full-stack web framework</span></span>
+        </a>
+
+        <a class="card" href="https://github.com/mdipierro" target="_blank" rel="noopener">
+          <span class="logo">
+            <svg viewBox="0 0 24 24" fill="#181717" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </span>
+          <span class="txt"><span class="name">GitHub</span><span class="sub">github.com/mdipierro</span></span>
+        </a>
+
+        <a class="card" href="https://github.com/unofficialtools/rigx" target="_blank" rel="noopener">
+          <span class="logo">
+            <svg viewBox="0 0 24 24" fill="#181717" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </span>
+          <span class="txt"><span class="name">rigx</span><span class="sub">unofficialtools/rigx</span></span>
+        </a>
+
+        <a class="card" href="/Publications/index.html">
+          <span class="logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#181717" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </span>
+          <span class="txt"><span class="name">Publications</span><span class="sub">Scientific papers &amp; articles</span></span>
+        </a>
+
+        <a class="card" href="https://www.amazon.com/Annotated-Algorithms-Python-Applications-2013-11-26/dp/B01FKRLH72/" target="_blank" rel="noopener">
+          <span class="logo"><img src="https://www.google.com/s2/favicons?domain=amazon.com&sz=64" alt="Amazon logo"></span>
+          <span class="txt"><span class="name">Books</span><span class="sub">Annotated Algorithms in Python</span></span>
+        </a>
+      </div>
+
+      <footer>
+        <a href="https://www.linkedin.com/in/massimodipierro">LinkedIn</a>
+      </footer>
+    </div>
+  </body>
+</html>
