@@ -1,0 +1,37 @@
+\documentclass[12pt]{article}
+
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{upquote}
+\begin{document}
+
+\section{CSC299 - Fall 2013 - Lab Assignment 8}
+
+\noindent Login into:
+\begin{verbatim}
+mdp.cdm.depaul.edu
+\end{verbatim}
+
+\noindent Under your csc299 folder create a new folder called {\tt lab08}.
+
+\subsection*{Option 1}
+
+Write a program {\tt wikimine.py} that inputs two filenames. The first being the filename of a CSV file with a list of wikipedia pages. The second being the the filename of a CSV file with a list of keywords. The program will connect to all those pages and count the occurrences of those words. It will produce in output a third CSV file where the first column is a keyword (sorted alphabetically) and the second column is the frequency (total number of occurrences) of that keyword.
+
+\subsection*{Option 2}
+
+Consider the web application http://mdp.cdm.depaul.edu/wiki. Register and try create a wiki page. You can create as many wiki pages as you like as long as the SLUG of the page starts with {\tt <your username>-}. Write a program that given the URL of any internet page, extracts the title and its content, as text, then logins into the wiki app and create a new page with a similar title and the downloaded content. Call you program {\tt wikipost.py}
+
+\subsection*{Option 3}
+
+Create a python program {\tt mycdm.py} that takes your campusconnect username and password, connects to MyCDM and retrieves:
+full student name, gender, degree name, completed credit hours, name of advisor, list of courses taken, GPA. DO NOT POST YOUR PASSWORD. YOU PROGRAMM SHOULD RETRIEVE THE PASSWORD IN THE FOLLOWING WAY:
+
+\begin{verbatim}
+import getpass
+password = getpass.getpass('your password:')
+\end{verbatim}
+
+You should input the password every time you run the code. Never store your password in a file.
+
+\end{document}

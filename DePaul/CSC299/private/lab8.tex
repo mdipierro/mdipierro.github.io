@@ -1,0 +1,41 @@
+\documentclass[12pt]{article}
+
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{upquote}
+\begin{document}
+
+\section{CSC299 - Lab Assignment 8}
+
+\subsection*{IMPORTANT INSTRUCTIONS}
+
+\noindent 
+As usual login into {\tt csc299\_<your student id>@mdp.cdm.depaul.edu}
+
+\noindent You have been given a second account on the same machine:
+
+{\tt csc299\_<your student id>\_test@mdp.cdm.depaul.edu} 
+
+Try login into it and logout. The password is 987654321.
+
+\noindent Create a fabfile.py under the csc299 folder and and run fabfile commands to perform the following tasks:
+
+\begin{itemize}
+\item locally zip the content of the csc299 folder
+\item copy that content remotely (the  ...\_test account)
+\item remotely unzip the zipped folder
+\item create a remote folder, if does not exist, called {\tt csc299/lab8}
+\item instruct the remote server to download and unzip\\
+{\tt http://web2py.com/examples/static/web2py\_src.zip} under\\
+ {\tt mdp.cdm.depaul.edu:~/csc299/lab8/}
+\item remotely run {\tt ~/csc299/lab8/web2py/web2py.py -p <port> -i 0.0.0.0} where port are the last 4 digits of your student id.\\
+Try access {\tt http://mdp.cdm.depaul.edu:<port>} from your browser.
+\item locally download {\tt http://mdp.cdm.depaul.edu:<port>} into\\{\tt /csc299/lab8/index.html}
+\item remotely zip the content of the {\tt /csc299/lab8/} folder and copy the zipped fle into your local {\tt /csc299/lab8/}
+\item add a function to your fabfile that removes all remote files that end with ~.
+\end{itemize}
+
+Use {\tt ssh-copy-id} so it does not asks for the password all the time.
+
+\end{document}
+

@@ -1,0 +1,41 @@
+\documentclass[12pt]{article}
+
+\begin{document}
+
+Solve one (only one) of the following problems. IMPORTANT: write your paper so that it can be understood by a manager who has an engineering background but has not take your class on Monte Carlo. The readability of the paper is a major factor in the grading.
+
+\section*{Problem 1}
+
+You run a company with two industrial plants. Occasionally there are accdents and you incur a cost. 
+
+Consider the file {\tt http://mdipierro.github.io/DePaul/CSC521/accidents.csv}. It contains recorded accidents over the last 4 years. The first column indicate where it happened (plant A or plant B). The second column indcates the day (0 is 4 years ago). The third column indicates the loss caused by the accidents in dollars.
+
+Without any simulation from the data, answer these questions:
+- what is the average number of accidents per year in plant A
+- what is the average number of accidents per year in plant B
+- what is the average loss per accident in plant A
+- what is the average loss per accident in plant B
+- what is the average loss in total per year in plan A
+- what is the average loss in total per year in plan B
+
+Now assume the time interval between accidents is exponential and the natural log of a loss due to a single accident is a guassian (aka the loss is lognormal) implement a simulate once that simulates one year of losses for both plants.
+
+Running simulate many, What is the average yearly loss with a relative precision of 10\%?
+Report the bootstrap errors in your result.
+
+How much should the company budget to make sure that it can cover these losses in 90\% of the simulated scenarios?
+
+Write a short paper (10 pages), explaining the problem, your solution, answers to the above questions with explanations, and an appendix containing the code (commented and indented). The paper should contain at one graph of losses vs time for one simulated scenario and one histograms of the distrbution on losses.
+
+\section*{Problem 2 (recommended for computational finance students)}
+
+Consider the following stocks: AAPL, GOOG, MSFT, AMZN, FB. Download the historical daily closing prices for these stocks for the last 5 years. For each compute the daily log return and daily volatility, yearly log return and yearly volatility (average over the past 5 years). You invest \$1M in each of these stocks (\$5M total). Implement a Monte Carlo simulation to compute the value of the portfolio in one year. What is the average portfolio value after one year? What is the 5\% VAR (defined as the amount such that in no more than 5\% of the simulated scenarios, the portfolio value in one year is below said value). Perform the simulation computation in two ways: 1) simulate each stock separately using a gaussian model for the log- return. 2) use resampling. Which is of the two methods is correct and why? What would be the price of a call option that pays you \$1M if, after three months, 4 of the 5 stocks have a value below their current value?
+
+Write a short paper (10 pages), explaining the problem, your solution, answers to the above questions with explanations, and an appendix containing the code (commented and indented). The paper should contain at least one graph showing the simulated stock prices in one simulated scenario and one plot of the distribution from which the VAR is computed.
+
+\section*{Problem 3 (the fun problem)}
+
+Do you know the video game ``snake''? Implement a simulator for the game. The snake is a one dimensional object of length 30cm. It moves at a speed of 1cm/second. It lives in a cage of 1000cm x 1000cm. The snake can only move horitontally or vertically. At random intervals (1 every 5 seconds in average) the snake can turn left or right. If the snake intersect itself, the snake bites itself and dies. The snake starts moving at the center of the cage. I bet \$1000 that the snake will bite itself before it reaches the end of the cage. Is this a good bet? Explain. (optional: can you visualize it with tkinter)
+
+Write a short paper (10 pages), explaining the problem, your solution, answers to the above questions with explanations, and an appendix containing the code (commented and indented).
+\end{document}
