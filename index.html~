@@ -186,39 +186,6 @@
       .publications li { margin: 0.45rem 0; line-height: 1.45; }
       .publications a { color: var(--accent); text-decoration: none; }
       .publications a:hover { text-decoration: underline; }
-      .pub-list { position: relative; }
-      .pub-list.collapsed {
-        max-height: 320px;
-        overflow: hidden;
-      }
-      .pub-list.collapsed::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 90px;
-        background: linear-gradient(to bottom, rgba(15,17,21,0), var(--bg));
-        pointer-events: none;
-        border-radius: 0 0 12px 12px;
-      }
-      .pub-toggle {
-        display: block;
-        margin: 1rem auto 0;
-        padding: 0.55rem 1.2rem;
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 9px;
-        color: var(--fg);
-        font-size: 0.9rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background .15s ease, border-color .15s ease;
-      }
-      .pub-toggle:hover {
-        background: var(--card-hover);
-        border-color: var(--accent);
-      }
       footer {
         text-align: center;
         margin-top: 3rem;
@@ -279,7 +246,7 @@
 
           <a class="card" href="https://hirosim.com/" target="_blank" rel="noopener">
             <span class="logo"><img src="media/hirosim.png" alt="HiroSim logo"></span>
-            <span class="txt"><span class="name">HiroSim</span><span class="sub">State of art simulation stack including flight computer specification languages, hardware abstraction layer, sensor/actuator models, and telemetry visualizer. Built for AI.</span></span>
+            <span class="txt"><span class="name">HiroSim</span><span class="sub">State of art simulation stack including flight computer specification languages, hardware abstraction layer, sensor/actuator models, and telemetry visualizer. Built for AI assisted development.</span></span>
           </a>
         </div>
       </section>
@@ -309,7 +276,6 @@
       <section class="publications">
         <h2>Publications</h2>
         <p class="pub-note">From old to recent. Only published papers, not including technical reports.</p>
-        <div class="pub-list collapsed" id="pubList">
         <ol>
           <li><a target="_blank" rel="noopener" href="Publications/1996-Mass-confinement-and-CP-invariance-in-the-Seiberg-Witten-model-Physics-Letters-B.pdf">1996 — Mass confinement and CP invariance in the Seiberg Witten model Physics Letters B</a></li>
           <li><a target="_blank" rel="noopener" href="Publications/1998-A-lattice-study-of-spectator-effects-in-B-mesons.pdf">1998 — A lattice study of spectator effects in B mesons</a></li>
@@ -382,21 +348,10 @@
           <li><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/8291773/">2018 — Toy Vision-Guided 3D Robotic Arm in JavaScript</a> (<a target="_blank" rel="noopener" href="https://github.com/mdipierro/vision-controlled-arm">CODE</a>)</li>
           <li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1802.08066">2018 — Reputation Systems for News on Twitter: A Large-Scale Study</a> (<a target="_blank" rel="noopener" href="http://truthvalue.org">LIVE</a>)</li>
         </ol>
-        </div>
-        <button class="pub-toggle" id="pubToggle" aria-expanded="false" onclick="togglePubs()">Show all publications</button>
       </section>
 
       <footer>
       </footer>
     </div>
-    <script>
-      function togglePubs() {
-        var list = document.getElementById('pubList');
-        var btn = document.getElementById('pubToggle');
-        var collapsed = list.classList.toggle('collapsed');
-        btn.setAttribute('aria-expanded', String(!collapsed));
-        btn.textContent = collapsed ? 'Show all publications' : 'Show fewer publications';
-      }
-    </script>
   </body>
 </html>
