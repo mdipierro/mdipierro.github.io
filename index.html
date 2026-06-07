@@ -9,13 +9,13 @@
     <title>Massimo Di Pierro</title>
     <style>
       :root {
-        --bg: #0f1115;
-        --card: #1a1d24;
-        --card-hover: #232733;
-        --fg: #e8eaed;
-        --muted: #9aa0aa;
-        --accent: #4f9cf9;
-        --border: #2a2e38;
+        --bg: #ffffff;
+        --card: #f5f6f8;
+        --card-hover: #eceef2;
+        --fg: #1a1d24;
+        --muted: #5a6270;
+        --accent: #2563eb;
+        --border: #e2e5ea;
       }
       * { box-sizing: border-box; }
       body {
@@ -27,7 +27,7 @@
         -webkit-font-smoothing: antialiased;
       }
       .wrap {
-        max-width: 760px;
+        width: min(960px, 80vw);
         margin: 0 auto;
         padding: 4rem 1.5rem 3rem;
       }
@@ -150,7 +150,7 @@
         max-width: 110px;
         height: auto;
         border-radius: 4px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       }
       a.book .book-title {
         font-size: 0.8rem;
@@ -198,7 +198,7 @@
         right: 0;
         bottom: 0;
         height: 90px;
-        background: linear-gradient(to bottom, rgba(15,17,21,0), var(--bg));
+        background: linear-gradient(to bottom, rgba(255,255,255,0), var(--bg));
         pointer-events: none;
         border-radius: 0 0 12px 12px;
       }
